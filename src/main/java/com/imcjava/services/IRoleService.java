@@ -1,5 +1,6 @@
 package com.imcjava.services;
 
+import com.imcjava.dto.RoleRequest;
 import com.imcjava.models.Role;
 import com.imcjava.repository.RoleRepository;
 import org.springframework.stereotype.Service;
@@ -17,8 +18,8 @@ public class IRoleService implements RoleService {
     }
 
     @Override
-    public Role create(Role role) {
-        return roleRepository.save(role);
+    public Role create(Role roleRequest) {
+        return roleRepository.save(roleRequest);
     }
 
     @Override
