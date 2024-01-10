@@ -1,0 +1,25 @@
+server:
+#  servlet:
+#    context-path: "/api/imc"
+  port: 9000
+
+spring:
+  application:
+    name: "imc-java"
+
+  jpa:
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
+
+
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/imc-database}
+    username: ${DATABASE_USERNAME:aamirnawaz}
+    password: ${DATABASE_PASSWORD:aamirnawaz}
+
+  servlet:
+      multipart:
+        max-file-size: 10MB
+        max-request-size: 10MB
+
