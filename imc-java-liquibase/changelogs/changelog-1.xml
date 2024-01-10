@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:pro="http://www.liquibase.org/xml/ns/pro" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
+    <!-- User table -->
+    <changeSet id="1" author="aamirnawaz" labels="user" context="imc-apis">
+        <comment>This changelog is for creating imc user table</comment>
+        <createTable tableName="user">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="username" type="text">
+                <constraints nullable="false" />
+            </column>
+            <column name="email" type="text">
+                <constraints nullable="true" unique="true"  />
+            </column>
+            <column name="password" type="text"/>
+            <column name="created_at" type="timestamp" defaultValueComputed="NOW()" />
+            <column name="updated_at" type="timestamp" defaultValueComputed="NOW()" />
+        </createTable>
+    </changeSet>
+
+    <!-- Role Table -->
+    <changeSet id="2" author="aamirnawaz" labels="role" context="imc-apis">
+    <comment>This changelog is for creating imc roles table</comment>
+        <createTable tableName="role">
+              <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+             <column name="name" type="text">
+                <constraints nullable="true" />
+            </column>
+             <column name="created_at" type="timestamp" defaultValueComputed="NOW()" />
+            <column name="updated_at" type="timestamp" defaultValueComputed="NOW()" />
+        </createTable>
+    </changeSet>
+
+    <changeSet id="3" author="aamirnawaz" labels="role" context="imc-apis">
+        <addColumn tableName="user">
+            <column name="role_id" type="BIGINT">
+                <constraints nullable="false" referencedTableName="role" referencedColumnNames="id" foreignKeyName="fk_user_role_id" />
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <!-- Service Table -->
+    <changeSet id="4" author="aamirnawaz" labels="service" context="imc-apis">
+        <createTable tableName="service">
+              <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+             <column name="name" type="text">
+                <constraints nullable="true" />
+            </column>
+             <column name="charges" type="int">
+                <constraints nullable="true"  />
+             </column>
+            <column name="user_id" type="uuid">
+                <constraints nullable="false" referencedTableName="user" referencedColumnNames="id" foreignKeyName="fk_user_id" />
+            </column>
+             <column name="created_at" type="timestamp" defaultValueComputed="NOW()" />
+            <column name="updated_at" type="timestamp" defaultValueComputed="NOW()" />
+        </createTable>
+    </changeSet>
+
+       <!-- ServiceProviderTypes Table -->
+    <changeSet id="5" author="aamirnawaz" labels="service-provider-types" context="imc-apis">
+        <createTable tableName="sp-type">
+              <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+             <column name="name" type="text">
+                <constraints nullable="true" />
+            </column>
+            <column name="role_id" type="BIGINT">
+                <constraints nullable="false" referencedTableName="role" referencedColumnNames="id" foreignKeyName="fk_sp_types_role_id" />
+            </column>
+             <column name="created_at" type="timestamp" defaultValueComputed="NOW()" />
+            <column name="updated_at" type="timestamp" defaultValueComputed="NOW()" />
+        </createTable>
+    </changeSet>
+
+    <!-- Add Column is_delete in user table -->
+    <changeSet id="6" author="aamirnawaz" labels="user" context="imc-apis">
+        <addColumn tableName="user">
+            <column name="is_deleted" type="boolean" defaultValueBoolean="false">
+                <constraints nullable="true" />
+            </column>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>
