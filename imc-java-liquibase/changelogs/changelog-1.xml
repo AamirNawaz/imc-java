@@ -212,7 +212,7 @@
                 <constraints nullable="true" referencedTableName="user" referencedColumnNames="id" foreignKeyName="fk_order_customer_id" />
             </column>
 
-            <column name="service_id" type="integer">
+            <column name="services" type="integer">
                 <constraints nullable="true" referencedTableName="service" referencedColumnNames="id" foreignKeyName="fk_order_service_id" />
             </column>
 
