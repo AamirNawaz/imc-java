@@ -20,7 +20,10 @@ public class Qualification {
     private Long id;
     private String qualification;
     private String experience;
-    private UUID userId;
+
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)

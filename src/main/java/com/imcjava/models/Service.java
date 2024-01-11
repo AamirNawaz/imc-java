@@ -24,7 +24,15 @@ public class Service {
     private String image;
     private Integer totalQty;
     private Integer availableQty;
-    private UUID createdBy;
+
+    @ManyToOne
+    @JoinColumn(name = "created_by")
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    private Order order;
+
     private Boolean status;
 
     @CreationTimestamp

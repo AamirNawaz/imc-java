@@ -20,8 +20,15 @@ public class Promotion {
     private Long id;
     private String type;
     private Boolean isSent;
-    private UUID userId;
-    private UUID createdBy;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "created_by")
+    private User createdBy;
+
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)

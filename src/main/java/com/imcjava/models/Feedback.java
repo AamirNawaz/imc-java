@@ -19,8 +19,14 @@ public class Feedback {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String message;
-    private UUID ratedBy;
-    private UUID ratedTo;
+    @OneToOne
+    @JoinColumn(name = "rated_to")
+    private User ratedTo;
+
+    @OneToOne
+    @JoinColumn(name = "rated_by")
+    private User ratedBy;
+
     private Integer rating;
 
     @CreationTimestamp

@@ -18,13 +18,21 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private UUID id;
-
     private String name;
     private String username;
     private String email;
     private String password;
-    private Long roleId;
-    private Long serviceProviderTypeId;
+
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
+
+    @ManyToOne
+    @JoinColumn(name = "service_provider_type_id")
+    private ServiceProviderType serviceProviderType;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.LAZY)
+    private Qualification qualification;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)

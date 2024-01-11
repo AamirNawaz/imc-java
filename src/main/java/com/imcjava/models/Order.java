@@ -1,5 +1,6 @@
 package com.imcjava.models;
 
+import com.imcjava.models.enums.PaymentMode;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,7 +10,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
-import java.util.UUID;
+import java.util.List;
 
 @Entity
 @Data
@@ -20,13 +21,19 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String orderNumber;
-    private UUID customerId;
-    private Long serviceId;
+
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private User customerId;
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Service> services;
+
     private Integer orderQty;
     private Boolean orderStatus;
     private DecimalFormat amount;
     private Boolean isPaid;
-    private String paymentMode;
+    private PaymentMode paymentMode;
     private Boolean isDeleted;
     private Integer contact;
     private String address;

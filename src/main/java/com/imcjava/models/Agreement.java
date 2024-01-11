@@ -18,8 +18,14 @@ public class Agreement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Boolean isAgreed;
-    private UUID userId;
-    private UUID agreedWith;
+
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @OneToOne
+    @JoinColumn(name = "agreed_with")
+    private User agreedWith;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
