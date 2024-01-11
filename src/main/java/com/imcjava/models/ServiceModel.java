@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "service")
 public class ServiceModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

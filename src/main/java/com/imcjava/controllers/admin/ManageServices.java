@@ -14,21 +14,17 @@ import java.util.List;
 public class ManageServices {
 
     private final ISpService iSpService;
-
     public ManageServices(ISpService iSpService) {
         this.iSpService = iSpService;
     }
-
     @PostMapping
     public ServiceModel create(@RequestBody ServiceRequest serviceRequest){
         return iSpService.create(serviceRequest);
     }
-
     @GetMapping
     public List<ServiceModel> get(){
         return iSpService.get();
     }
-
     @GetMapping("/{id}")
     public ServiceModel getById(@PathVariable Long id){
         return iSpService.getById(id);
