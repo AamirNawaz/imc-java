@@ -1,25 +1,35 @@
 package com.imcjava.services;
 
 import com.imcjava.dto.RoleRequest;
+import com.imcjava.dto.RoleResponse;
 import com.imcjava.models.Role;
 import com.imcjava.repository.RoleRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 public class IRoleService implements RoleService {
-
-    //constructor
-    private final RoleRepository roleRepository;
+     private final RoleRepository roleRepository;
 
     public IRoleService(RoleRepository roleRepository) {
         this.roleRepository = roleRepository;
     }
 
     @Override
-    public Role create(Role roleRequest) {
-        return roleRepository.save(roleRequest);
+    public RoleResponse create(RoleRequest roleRequest) {
+        Role role = new Role();
+        role.setName(roleRequest.getName());
+        Role createdRole =  roleRepository.save(role);
+
+        //making response
+        RoleResponse roleResponse = new RoleResponse();
+        roleResponse.setId(createdRole.getId());
+        roleResponse.setName(createdRole.getName());
+        roleResponse.setCreatedAt(createdRole.getCreatedAt());
+        roleResponse.setUpdatedAt(createdRole.getUpdatedAt());
+        return roleResponse;
     }
 
     @Override

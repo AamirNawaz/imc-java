@@ -1,8 +1,10 @@
 package com.imcjava.controllers.admin;
 
 import com.imcjava.dto.RoleRequest;
+import com.imcjava.dto.RoleResponse;
 import com.imcjava.models.Role;
 import com.imcjava.services.IRoleService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,15 +13,14 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/roles")
 public class ManageRoles {
-
     private final IRoleService iRoleService;
     public ManageRoles(IRoleService iRoleService) {
         this.iRoleService = iRoleService;
     }
 
     @PostMapping
-    public Role createRole(Role role){
-        return iRoleService.create(role);
+    public RoleResponse createRole(@RequestBody RoleRequest roleRequest){
+        return iRoleService.create(roleRequest);
     }
 
     @GetMapping
