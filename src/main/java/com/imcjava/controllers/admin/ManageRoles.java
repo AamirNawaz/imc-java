@@ -4,8 +4,6 @@ import com.imcjava.dto.RoleRequest;
 import com.imcjava.dto.RoleResponse;
 import com.imcjava.models.Role;
 import com.imcjava.services.IRoleService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
