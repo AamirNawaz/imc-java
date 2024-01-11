@@ -20,7 +20,7 @@ public class Service {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private DecimalFormat charges;
+    private Integer charges;
     private String image;
     private Integer totalQty;
     private Integer availableQty;

@@ -27,11 +27,12 @@ public class Order {
     private User customerId;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "service_id")
     private List<Service> services;
 
     private Integer orderQty;
     private Boolean orderStatus;
-    private DecimalFormat amount;
+    private Integer amount;
     private Boolean isPaid;
     private PaymentMode paymentMode;
     private Boolean isDeleted;

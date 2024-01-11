@@ -14,6 +14,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Table(name = "qualification")
 public class Qualification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

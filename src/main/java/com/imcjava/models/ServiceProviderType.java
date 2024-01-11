@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Table(name = "sp_type")
 public class ServiceProviderType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

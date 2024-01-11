@@ -22,7 +22,7 @@ public class User {
     private String username;
     private String email;
     private String password;
-
+    private Boolean isDeleted;
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;
@@ -32,7 +32,8 @@ public class User {
     private ServiceProviderType serviceProviderType;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.LAZY)
-    private Qualification qualification;
+    @JoinColumn(name = "qualification_id")
+    private Qualification qualificationId;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
