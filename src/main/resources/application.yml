@@ -1,6 +1,6 @@
 server:
-#  servlet:
-#    context-path: "/api/imc"
+  servlet:
+    context-path: "/api"
   port: 9000
 
 spring:
