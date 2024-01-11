@@ -1,9 +1,9 @@
 package com.imcjava.controllers.admin;
 
-import com.imcjava.dto.RoleRequest;
-import com.imcjava.dto.RoleResponse;
+import com.imcjava.dto.roleDto.RoleRequest;
+import com.imcjava.dto.roleDto.RoleResponse;
 import com.imcjava.models.Role;
-import com.imcjava.services.IRoleService;
+import com.imcjava.services.role.IRoleService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

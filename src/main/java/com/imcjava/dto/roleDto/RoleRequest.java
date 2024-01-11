@@ -1,4 +1,4 @@
-package com.imcjava.dto;
+package com.imcjava.dto.roleDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,8 +1,8 @@
-package com.imcjava.services;
+package com.imcjava.services.role;
 
 
-import com.imcjava.dto.RoleRequest;
-import com.imcjava.dto.RoleResponse;
+import com.imcjava.dto.roleDto.RoleRequest;
+import com.imcjava.dto.roleDto.RoleResponse;
 import com.imcjava.models.Role;
 
 import java.util.List;
