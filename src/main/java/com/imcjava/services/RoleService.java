@@ -11,10 +11,7 @@ public interface RoleService {
 
     RoleResponse create(RoleRequest roleRequest);
     List<Role> get();
-
     Role getRole(Long id);
-
     String Delete(Long id);
-
 }
 
