@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/agreement")
+@RequestMapping("/qualification")
 public class ManageQualification {
     private final IQualificationService iQualificationService;
 
