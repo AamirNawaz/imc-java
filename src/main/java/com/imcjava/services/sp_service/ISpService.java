@@ -42,6 +42,6 @@ public class ISpService implements SpService {
     @Override
     public String Delete(Long id) {
         serviceRepository.deleteById(id);
-        return "Service Deleted successfully!";
+        return "Record No:"+id+" deleted successfully!";
     }
 }
