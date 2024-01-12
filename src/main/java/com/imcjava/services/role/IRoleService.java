@@ -37,13 +37,13 @@ public class IRoleService implements RoleService {
     }
 
     @Override
-    public Role getRole(Long id) {
-        return roleRepository.findById(id).orElseThrow(()-> new RuntimeException("Role not found!"));
+    public Role getById(Long id) {
+        return roleRepository.findById(id).orElseThrow(()-> new RuntimeException("Record not found!"));
     }
 
     @Override
     public String Delete(Long id) {
          roleRepository.deleteById(id);
-         return "Role deleted successfully!";
+        return "Record No:"+id+" deleted successfully!";
     }
 }

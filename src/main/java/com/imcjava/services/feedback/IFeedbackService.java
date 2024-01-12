@@ -38,6 +38,6 @@ public class IFeedbackService implements FeedbackService {
     @Override
     public String Delete(Long id) {
          feedbackRepository.deleteById(id);
-         return "Feed back deleted successfully!";
+        return "Record No:"+id+" deleted successfully!";
     }
 }
