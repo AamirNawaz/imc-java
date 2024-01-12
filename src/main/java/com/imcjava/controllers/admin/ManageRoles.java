@@ -4,6 +4,7 @@ import com.imcjava.dto.roleDto.RoleRequest;
 import com.imcjava.dto.roleDto.RoleResponse;
 import com.imcjava.models.Role;
 import com.imcjava.services.role.IRoleService;
+import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,9 +29,10 @@ public class ManageRoles {
 
     @GetMapping("/{id}")
     public Role getRole(@PathVariable Long id){
-        return iRoleService.getRole(id);
+        return iRoleService.getById(id);
     }
 
+    @Hidden
     @DeleteMapping("/{id}")
     public String deleteRole(@PathVariable Long id){
         return iRoleService.Delete(id);

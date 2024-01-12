@@ -36,6 +36,7 @@ public class ManageSpTypes {
     public ServiceProviderTypesResponse update(@PathVariable Long id,@RequestBody ServiceProviderTypesRequest serviceProviderTypesRequest){
         return iSpTypesService.update(id,serviceProviderTypesRequest);
     }
+
     @DeleteMapping("/{id}")
     public String delete(@PathVariable Long id){
         return iSpTypesService.Delete(id);
