@@ -7,13 +7,14 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Role {
+public class Role implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,4 +27,9 @@ public class Role {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    public Role(String name) {
+        this.name = name;
+    }
+
 }
