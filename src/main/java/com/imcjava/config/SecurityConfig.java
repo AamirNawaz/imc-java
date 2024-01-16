@@ -1,10 +1,13 @@
 package com.imcjava.config;
 
-import com.imcjava.jwt_middleware_filter.JwtRequestFilter;
+import com.imcjava.jwtRequestFilter.JwtRequestFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -16,36 +19,39 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-//@EnableGlobalAuthentication
+@EnableMethodSecurity
 public class SecurityConfig {
     private final JwtRequestFilter jwtRequestFilter;
 
-    public SecurityConfig(JwtRequestFilter jwtRequestFilter) {
+
+    public SecurityConfig(@Lazy JwtRequestFilter jwtRequestFilter) {
         this.jwtRequestFilter = jwtRequestFilter;
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 
-        httpSecurity
-                .csrf(AbstractHttpConfigurer::disable)
+        //.requestMatchers we did not provides the context name like "/api/" here in our case whic comes from applicatio.yml file
+        return httpSecurity
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/admin").hasRole("ADMIN")
-                        .requestMatchers("/customer/login").permitAll()
-                        .requestMatchers("/customer/signup").permitAll()
-                        .requestMatchers("/api/customer").hasAnyRole("ADMIN", "CUSTOMER")
-                        .requestMatchers("/api/service-provider").hasAnyRole("ADMIN", "SP")
+                        .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
+                        .requestMatchers("/roles/**").permitAll()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/customer/**").hasAnyRole("ADMIN", "CUSTOMER")
+                        .requestMatchers("/service-provider/**").hasAnyRole("ADMIN", "SP")
                         .anyRequest().authenticated()
+
                 )
                 .sessionManagement(
-                        session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                        session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
-                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-        return httpSecurity.build();
+                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
+                .csrf(AbstractHttpConfigurer::disable)
+                .build();
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -54,3 +60,10 @@ public class SecurityConfig {
         return authenticationConfiguration.getAuthenticationManager();
     }
 }
+
+
+//Backup code
+//                .csrf(csrf -> {
+//                    csrf.ignoringRequestMatchers("/api/roles", "/api/auth/login", "/api/auth/signup");
+//                    csrf.disable();
+//                })

@@ -1,4 +1,4 @@
-package com.imcjava.jwt_middleware_filter;
+package com.imcjava.jwtRequestFilter;
 
 import com.imcjava.services.user.MyUserService;
 import com.imcjava.utils.JwtUtil;
@@ -7,6 +7,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,7 +22,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     private final JwtUtil jwtUtil;
     private final MyUserService myUserService;
 
-    public JwtRequestFilter(JwtUtil jwtUtil, MyUserService myUserService) {
+    public JwtRequestFilter(@Lazy JwtUtil jwtUtil, @Lazy MyUserService myUserService) {
         this.jwtUtil = jwtUtil;
         this.myUserService = myUserService;
     }
