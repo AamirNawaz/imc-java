@@ -3,10 +3,10 @@
 <databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
-    <!-- User table -->
-    <changeSet id="1" author="aamirnawaz" labels="user" context="imc-apis">
+    <!-- imc_user table -->
+    <changeSet id="1" author="aamirnawaz" labels="imc_user" context="imc-apis">
         <comment>This changelog is for creating imc user table</comment>
-        <createTable tableName="user">
+        <createTable tableName="imc_user">
             <column name="id" type="uuid">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -61,7 +61,7 @@
             </column>
 
             <column name="created_by" type="uuid">
-                <constraints nullable="true" referencedTableName="user" referencedColumnNames="id"
+                <constraints nullable="true" referencedTableName="imc_user" referencedColumnNames="id"
                              foreignKeyName="fk_created_by"/>
             </column>
 
@@ -98,7 +98,7 @@
                 <constraints nullable="true"/>
             </column>
             <column name="user_id" type="uuid">
-                <constraints nullable="true" referencedTableName="user" referencedColumnNames="id"
+                <constraints nullable="true" referencedTableName="imc_user" referencedColumnNames="id"
                              foreignKeyName="fk_qualification_user_id"/>
             </column>
             <column name="created_at" type="timestamp" defaultValueComputed="NOW()"/>
@@ -119,7 +119,7 @@
                 <constraints nullable="true"/>
             </column>
             <column name="user_id" type="uuid">
-                <constraints nullable="true" referencedTableName="user" referencedColumnNames="id"
+                <constraints nullable="true" referencedTableName="imc_user" referencedColumnNames="id"
                              foreignKeyName="fk_qualification_user_id"/>
             </column>
             <column name="created_at" type="timestamp" defaultValueComputed="NOW()"/>
@@ -139,11 +139,11 @@
                 <constraints nullable="true"/>
             </column>
             <column name="user_id" type="uuid">
-                <constraints nullable="true" referencedTableName="user" referencedColumnNames="id"
+                <constraints nullable="true" referencedTableName="imc_user" referencedColumnNames="id"
                              foreignKeyName="fk_agreement_user_id"/>
             </column>
             <column name="agreed_with" type="uuid">
-                <constraints nullable="true" referencedTableName="user" referencedColumnNames="id"
+                <constraints nullable="true" referencedTableName="imc_user" referencedColumnNames="id"
                              foreignKeyName="fk_agreed_with_user_id"/>
             </column>
 
@@ -165,11 +165,11 @@
             </column>
 
             <column name="rated_to" type="uuid">
-                <constraints nullable="true" referencedTableName="user" referencedColumnNames="id"
+                <constraints nullable="true" referencedTableName="imc_user" referencedColumnNames="id"
                              foreignKeyName="fk_rated_to_user_id"/>
             </column>
             <column name="rated_by" type="uuid">
-                <constraints nullable="true" referencedTableName="user" referencedColumnNames="id"
+                <constraints nullable="true" referencedTableName="imc_user" referencedColumnNames="id"
                              foreignKeyName="fk_rated_by_user_id"/>
             </column>
 
@@ -212,7 +212,7 @@
             </column>
 
             <column name="customer_id" type="uuid">
-                <constraints nullable="true" referencedTableName="user" referencedColumnNames="id"
+                <constraints nullable="true" referencedTableName="imc_user" referencedColumnNames="id"
                              foreignKeyName="fk_order_customer_id"/>
             </column>
 
@@ -228,36 +228,17 @@
 
 
     <!-- Add Column is_delete in user table -->
-    <changeSet id="10" author="aamirnawaz" labels="user" context="imc-apis">
-        <addColumn tableName="user">
+    <changeSet id="10" author="aamirnawaz" labels="imc_user" context="imc-apis">
+        <addColumn tableName="imc_user">
             <column name="is_deleted" type="boolean" defaultValueBoolean="false">
                 <constraints nullable="true"/>
             </column>
         </addColumn>
     </changeSet>
 
-    <!-- service_provider_type_id -->
-    <changeSet id="11" author="aamirnawaz" labels="sp_type" context="imc-apis">
-        <addColumn tableName="user">
-            <column name="service_provider_type_id" type="BIGINT">
-                <constraints nullable="true" referencedTableName="sp_type" referencedColumnNames="id"
-                             foreignKeyName="fk_user_service_provider_type_id"/>
-            </column>
-        </addColumn>
-    </changeSet>
-
-    <!-- qualification_id -->
-    <changeSet id="12" author="aamirnawaz" labels="qualification" context="imc-apis">
-        <addColumn tableName="user">
-            <column name="qualification_id" type="BIGINT">
-                <constraints nullable="true" referencedTableName="qualification" referencedColumnNames="id"
-                             foreignKeyName="fk_user_qualification_id"/>
-            </column>
-        </addColumn>
-    </changeSet>
 
     <!-- order id refrence in service table-->
-    <changeSet id="13" author="aamirnawaz" labels="service" context="imc-apis">
+    <changeSet id="11" author="aamirnawaz" labels="service" context="imc-apis">
         <addColumn tableName="service">
             <column name="order_id" type="BIGINT">
                 <constraints nullable="true" referencedTableName="order" referencedColumnNames="id"
@@ -267,7 +248,7 @@
     </changeSet>
 
     <!-- Add image column in service table -->
-    <changeSet id="14" author="aamirnawaz" labels="service" context="imc-apis">
+    <changeSet id="12" author="aamirnawaz" labels="service" context="imc-apis">
         <addColumn tableName="service">
             <column name="image" type="text">
                 <constraints nullable="true"/>
@@ -276,8 +257,8 @@
     </changeSet>
 
     <!-- Create user_roles table -->
-    <changeSet id="15" author="aamirnawaz" labels="userRolesTable" context="imc-api">
-        <createTable tableName="user_roles">
+    <changeSet id="13" author="aamirnawaz" labels="userRolesTable" context="imc-api">
+        <createTable tableName="imc_user_roles">
             <column name="user_id" type="uuid">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -288,17 +269,17 @@
     </changeSet>
 
     <!-- Add foreign key constraints -->
-    <changeSet id="16" author="aamirnawaz" labels="userRolesTable" context="imc-api">
+    <changeSet id="14" author="aamirnawaz" labels="userRolesTable" context="imc-api">
         <addForeignKeyConstraint
-                baseTableName="user_roles"
+                baseTableName="imc_user_roles"
                 baseColumnNames="user_id"
                 constraintName="fk_user_roles_user"
-                referencedTableName="user"
+                referencedTableName="imc_user"
                 referencedColumnNames="id"
                 onDelete="CASCADE"
                 onUpdate="CASCADE"/>
         <addForeignKeyConstraint
-                baseTableName="user_roles"
+                baseTableName="imc_user_roles"
                 baseColumnNames="role_id"
                 constraintName="fk_user_roles_role"
                 referencedTableName="role"
@@ -306,6 +287,26 @@
                 onDelete="CASCADE"
                 onUpdate="CASCADE"/>
     </changeSet>
+
+    <!-- qualification_id -->
+    <!--    <changeSet id="11" author="aamirnawaz" labels="qualification" context="imc-apis">-->
+    <!--        <addColumn tableName="user">-->
+    <!--            <column name="qualification_id" type="BIGINT">-->
+    <!--                <constraints nullable="true" referencedTableName="qualification" referencedColumnNames="id"-->
+    <!--                             foreignKeyName="fk_user_qualification_id"/>-->
+    <!--            </column>-->
+    <!--        </addColumn>-->
+    <!--    </changeSet>-->
+
+    <!-- service_provider_type_id -->
+    <!--    <changeSet id="11" author="aamirnawaz" labels="sp_type" context="imc-apis">-->
+    <!--        <addColumn tableName="user">-->
+    <!--            <column name="service_provider_type_id" type="BIGINT">-->
+    <!--                <constraints nullable="true" referencedTableName="sp_type" referencedColumnNames="id"-->
+    <!--                             foreignKeyName="fk_user_service_provider_type_id"/>-->
+    <!--            </column>-->
+    <!--        </addColumn>-->
+    <!--    </changeSet>-->
 
     <!--    The below for creating role with user fk foreign key is not need before above we have already
     created  user_role junction table which fulfil our requirments-->

@@ -7,24 +7,23 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Table(name = "qualification")
-public class Qualification {
+public class Qualification implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String qualification;
     private String experience;
 
-    @OneToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private Long user;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)

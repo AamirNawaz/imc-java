@@ -1,10 +1,13 @@
 package com.imcjava.config;
 
-import com.imcjava.jwt_middleware_filter.JwtRequestFilter;
+import com.imcjava.jwtRequestFilter.JwtRequestFilter;
+import jakarta.servlet.DispatcherType;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -16,36 +19,46 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-//@EnableGlobalAuthentication
+@EnableMethodSecurity
 public class SecurityConfig {
     private final JwtRequestFilter jwtRequestFilter;
 
-    public SecurityConfig(JwtRequestFilter jwtRequestFilter) {
+
+    public SecurityConfig(@Lazy JwtRequestFilter jwtRequestFilter) {
         this.jwtRequestFilter = jwtRequestFilter;
     }
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
 
-        httpSecurity
-                .csrf(AbstractHttpConfigurer::disable)
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+        return httpSecurity
+//        Configure HttpSecurity to only be applied to URLs that start with /api/
+//            .securityMatcher("/api/**")
+
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/admin").hasRole("ADMIN")
-                        .requestMatchers("/customer/login").permitAll()
-                        .requestMatchers("/customer/signup").permitAll()
-                        .requestMatchers("/api/customer").hasAnyRole("ADMIN", "CUSTOMER")
-                        .requestMatchers("/api/service-provider").hasAnyRole("ADMIN", "SP")
+                        .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
+                        .requestMatchers("/v3/**", "/swagger-ui/**").permitAll()
+                        .requestMatchers("/authController/**").permitAll()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/customer/**").hasAnyRole("ADMIN", "CUSTOMER")
+                        .requestMatchers("/service-provider/**").hasAnyRole("ADMIN", "SP")
                         .anyRequest().authenticated()
                 )
+
+//                .authorizeHttpRequests(customizer -> {
+//                    customizer.requestMatchers("/api/auth/signup").permitAll();
+//                    customizer.requestMatchers("/api/auth/login").permitAll();
+//                })
                 .sessionManagement(
-                        session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                        session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
-                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-        return httpSecurity.build();
+                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
+                .csrf(AbstractHttpConfigurer::disable)
+                .build();
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -53,4 +66,10 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
+
+//    @Bean(name = "handlerMappingIntrospector")
+//    HandlerMappingIntrospector handlerMappingIntrospector() {
+//        return new HandlerMappingIntrospector();
+//    }
 }
+

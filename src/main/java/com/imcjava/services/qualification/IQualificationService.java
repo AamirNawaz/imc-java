@@ -9,11 +9,12 @@ import java.util.List;
 
 @Service
 public class IQualificationService implements QualificationService {
-    private final QualificationRepository qualificationRepository ;
+    private final QualificationRepository qualificationRepository;
 
     public IQualificationService(QualificationRepository qualificationRepository) {
         this.qualificationRepository = qualificationRepository;
     }
+
     @Override
     public Qualification create(QualificationRequest qualificationRequest) {
         Qualification newQualification = new Qualification();
@@ -30,12 +31,12 @@ public class IQualificationService implements QualificationService {
 
     @Override
     public Qualification getById(Long id) {
-        return qualificationRepository.findById(id).orElseThrow(()->new RuntimeException("Record not found!"));
+        return qualificationRepository.findById(id).orElseThrow(() -> new RuntimeException("Record not found!"));
     }
 
     @Override
     public String Delete(Long id) {
         qualificationRepository.deleteById(id);
-         return "Record No:"+id+" deleted successfully!";
+        return "Record No:" + id + " deleted successfully!";
     }
 }

@@ -10,31 +10,32 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/roles")
+@RequestMapping("/admin/roles")
 public class ManageRoles {
     private final IRoleService iRoleService;
+
     public ManageRoles(IRoleService iRoleService) {
         this.iRoleService = iRoleService;
     }
 
     @PostMapping
-    public RoleResponse createRole(@RequestBody RoleRequest roleRequest){
+    public RoleResponse createRole(@RequestBody RoleRequest roleRequest) {
         return iRoleService.create(roleRequest);
     }
 
     @GetMapping
-    public List<Role> getRoles(){
+    public List<Role> getRoles() {
         return iRoleService.get();
     }
 
     @GetMapping("/{id}")
-    public Role getRole(@PathVariable Long id){
+    public Role getRole(@PathVariable Long id) {
         return iRoleService.getById(id);
     }
 
     @Hidden
     @DeleteMapping("/{id}")
-    public String deleteRole(@PathVariable Long id){
+    public String deleteRole(@PathVariable Long id) {
         return iRoleService.Delete(id);
     }
 
