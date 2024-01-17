@@ -34,21 +34,20 @@ public class SecurityConfig {
         return httpSecurity
 //        Configure HttpSecurity to only be applied to URLs that start with /api/
 //            .securityMatcher("/api/**")
-
                 .authorizeHttpRequests(authorize -> authorize
                         .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
-                        .requestMatchers("/v3/**", "/swagger-ui/**").permitAll()
-                        .requestMatchers("/authController/**").permitAll()
+                        //Frontend open routes
+                        .requestMatchers("/v3/**", "/swagger-ui/**", "/authController/**").permitAll()
+                        //Admin routes
                         .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/admin/service/**").hasAnyRole("ADMIN", "SP")
+                        //Customer routes
                         .requestMatchers("/customer/**").hasAnyRole("ADMIN", "CUSTOMER")
+                        //Service provider routes
                         .requestMatchers("/service-provider/**").hasAnyRole("ADMIN", "SP")
                         .anyRequest().authenticated()
                 )
 
-//                .authorizeHttpRequests(customizer -> {
-//                    customizer.requestMatchers("/api/auth/signup").permitAll();
-//                    customizer.requestMatchers("/api/auth/login").permitAll();
-//                })
                 .sessionManagement(
                         session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
@@ -66,10 +65,4 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
-
-//    @Bean(name = "handlerMappingIntrospector")
-//    HandlerMappingIntrospector handlerMappingIntrospector() {
-//        return new HandlerMappingIntrospector();
-//    }
 }
-

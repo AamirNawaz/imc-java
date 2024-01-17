@@ -8,30 +8,31 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/feedback")
+@RequestMapping("/admin/feedback")
 public class ManageFeedback {
     private final IFeedbackService iFeedbackService;
 
     public ManageFeedback(IFeedbackService iFeedbackService) {
         this.iFeedbackService = iFeedbackService;
     }
+
     @PostMapping
-    public Feedback createRole(@RequestBody FeedbackRequest feedbackRequest){
+    public Feedback createRole(@RequestBody FeedbackRequest feedbackRequest) {
         return iFeedbackService.create(feedbackRequest);
     }
 
     @GetMapping
-    public List<Feedback> get(){
+    public List<Feedback> get() {
         return iFeedbackService.get();
     }
 
     @GetMapping("/{id}")
-    public Feedback getRole(@PathVariable Long id){
+    public Feedback getRole(@PathVariable Long id) {
         return iFeedbackService.getById(id);
     }
 
     @DeleteMapping("/{id}")
-    public String deleteRole(@PathVariable Long id){
+    public String deleteRole(@PathVariable Long id) {
         return iFeedbackService.Delete(id);
     }
 }
