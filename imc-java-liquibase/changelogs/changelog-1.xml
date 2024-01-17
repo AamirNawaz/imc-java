@@ -1,43 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:pro="http://www.liquibase.org/xml/ns/pro" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
-                        http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
-    <!-- User table -->
-    <changeSet id="1" author="aamirnawaz" labels="user" context="imc-apis">
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!-- imc_user table -->
+    <changeSet id="1" author="aamirnawaz" labels="imc_user" context="imc-apis">
         <comment>This changelog is for creating imc user table</comment>
-        <createTable tableName="user">
+        <createTable tableName="imc_user">
             <column name="id" type="uuid">
-                <constraints primaryKey="true" nullable="false" />
+                <constraints primaryKey="true" nullable="false"/>
             </column>
-              <column name="name" type="text">
-                <constraints nullable="true" />
-            </column>
-            <column name="username" type="text">
-                <constraints nullable="true" />
+            <column name="name" type="text">
+                <constraints nullable="true"/>
             </column>
             <column name="email" type="text">
-                <constraints nullable="true" unique="true"  />
+                <constraints nullable="true" unique="true"/>
             </column>
             <column name="password" type="text"/>
-            <column name="created_at" type="timestamp" defaultValueComputed="NOW()" />
-            <column name="updated_at" type="timestamp" defaultValueComputed="NOW()" />
+            <column name="created_at" type="timestamp" defaultValueComputed="NOW()"/>
+            <column name="updated_at" type="timestamp" defaultValueComputed="NOW()"/>
         </createTable>
     </changeSet>
 
     <!-- Role Table -->
     <changeSet id="2" author="aamirnawaz" labels="role" context="imc-apis">
-    <comment>This changelog is for creating imc roles table</comment>
+        <comment>This changelog is for creating imc roles table</comment>
         <createTable tableName="role">
-              <column name="id" type="BIGINT" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false" />
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
             </column>
-             <column name="name" type="text">
-                <constraints nullable="true" />
+            <column name="name" type="text">
+                <constraints nullable="true"/>
             </column>
-             <column name="created_at" type="timestamp" defaultValueComputed="NOW()" />
-            <column name="updated_at" type="timestamp" defaultValueComputed="NOW()" />
+            <column name="created_at" type="timestamp" defaultValueComputed="NOW()"/>
+            <column name="updated_at" type="timestamp" defaultValueComputed="NOW()"/>
         </createTable>
     </changeSet>
 
@@ -45,230 +41,214 @@
     <!-- Service Table -->
     <changeSet id="3" author="aamirnawaz" labels="service" context="imc-apis">
         <createTable tableName="service">
-              <column name="id" type="BIGINT" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false" />
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
             </column>
-             <column name="name" type="text">
-                <constraints nullable="true" />
+            <column name="name" type="text">
+                <constraints nullable="true"/>
             </column>
-             <column name="charges" type="int">
-                <constraints nullable="true"  />
-             </column>
-             <column name="total_qty" type="int">
-                <constraints nullable="true"  />
-             </column>
+            <column name="charges" type="int">
+                <constraints nullable="true"/>
+            </column>
+            <column name="total_qty" type="int">
+                <constraints nullable="true"/>
+            </column>
             <column name="available_qty" type="int">
-                <constraints nullable="true"  />
-             </column>
-              <column name="status" type="boolean" defaultValueBoolean="false">
-                <constraints nullable="true"  />
-             </column>
+                <constraints nullable="true"/>
+            </column>
+            <column name="status" type="boolean" defaultValueBoolean="false">
+                <constraints nullable="true"/>
+            </column>
 
             <column name="created_by" type="uuid">
-                <constraints nullable="true" referencedTableName="user" referencedColumnNames="id" foreignKeyName="fk_created_by" />
+                <constraints nullable="true" referencedTableName="imc_user" referencedColumnNames="id"
+                             foreignKeyName="fk_created_by"/>
             </column>
-        
-             <column name="created_at" type="timestamp" defaultValueComputed="NOW()" />
-            <column name="updated_at" type="timestamp" defaultValueComputed="NOW()" />
+
+            <column name="created_at" type="timestamp" defaultValueComputed="NOW()"/>
+            <column name="updated_at" type="timestamp" defaultValueComputed="NOW()"/>
         </createTable>
     </changeSet>
 
-       <!-- ServiceProviderTypes Table -->
+    <!-- ServiceProviderTypes Table -->
     <changeSet id="4" author="aamirnawaz" labels="service-provider-types" context="imc-apis">
         <createTable tableName="sp_type">
-              <column name="id" type="BIGINT" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false" />
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
             </column>
-             <column name="name" type="text">
-                <constraints nullable="true" />
+            <column name="name" type="text">
+                <constraints nullable="true"/>
             </column>
-             <column name="created_at" type="timestamp" defaultValueComputed="NOW()" />
-            <column name="updated_at" type="timestamp" defaultValueComputed="NOW()" />
+            <column name="created_at" type="timestamp" defaultValueComputed="NOW()"/>
+            <column name="updated_at" type="timestamp" defaultValueComputed="NOW()"/>
         </createTable>
     </changeSet>
 
 
-       <!-- User Qualification Table -->
+    <!-- User Qualification Table -->
     <changeSet id="5" author="aamirnawaz" labels="qualification" context="imc-apis">
         <createTable tableName="qualification">
-              <column name="id" type="BIGINT" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false" />
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
             </column>
-             <column name="qualification" type="text">
-                <constraints nullable="true" />
+            <column name="qualification" type="text">
+                <constraints nullable="true"/>
             </column>
-                <column name="experience" type="text">
-                <constraints nullable="true" />
+            <column name="experience" type="text">
+                <constraints nullable="true"/>
             </column>
             <column name="user_id" type="uuid">
-                <constraints nullable="true" referencedTableName="user" referencedColumnNames="id" foreignKeyName="fk_qualification_user_id" />
+                <constraints nullable="true" referencedTableName="imc_user" referencedColumnNames="id"
+                             foreignKeyName="fk_qualification_user_id"/>
             </column>
-             <column name="created_at" type="timestamp" defaultValueComputed="NOW()" />
-            <column name="updated_at" type="timestamp" defaultValueComputed="NOW()" />
+            <column name="created_at" type="timestamp" defaultValueComputed="NOW()"/>
+            <column name="updated_at" type="timestamp" defaultValueComputed="NOW()"/>
         </createTable>
     </changeSet>
 
-           <!-- User promotion Table -->
+    <!-- User promotion Table -->
     <changeSet id="6" author="aamirnawaz" labels="promotion" context="imc-apis">
         <createTable tableName="promotion">
-              <column name="id" type="BIGINT" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false" />
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
             </column>
-             <column name="type" type="text">
-                <constraints nullable="true" />
+            <column name="type" type="text">
+                <constraints nullable="true"/>
             </column>
-                <column name="is_sent" type="boolean" defaultValueBoolean="false">
-                <constraints nullable="true" />
+            <column name="is_sent" type="boolean" defaultValueBoolean="false">
+                <constraints nullable="true"/>
             </column>
             <column name="user_id" type="uuid">
-                <constraints nullable="true" referencedTableName="user" referencedColumnNames="id" foreignKeyName="fk_qualification_user_id" />
+                <constraints nullable="true" referencedTableName="imc_user" referencedColumnNames="id"
+                             foreignKeyName="fk_qualification_user_id"/>
             </column>
-             <column name="created_at" type="timestamp" defaultValueComputed="NOW()" />
-            <column name="updated_at" type="timestamp" defaultValueComputed="NOW()" />
+            <column name="created_at" type="timestamp" defaultValueComputed="NOW()"/>
+            <column name="updated_at" type="timestamp" defaultValueComputed="NOW()"/>
         </createTable>
     </changeSet>
 
     <changeSet id="7" author="aamirnawaz" labels="agreement" context="imc-apis">
         <createTable tableName="agreement">
-              <column name="id" type="BIGINT" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false" />
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
             </column>
-             <column name="is_agreed" type="boolean" defaultValueBoolean="false">
-                <constraints nullable="true" />
+            <column name="is_agreed" type="boolean" defaultValueBoolean="false">
+                <constraints nullable="true"/>
             </column>
-                <column name="is_sent" type="boolean" defaultValueBoolean="false">
-                <constraints nullable="true" />
+            <column name="is_sent" type="boolean" defaultValueBoolean="false">
+                <constraints nullable="true"/>
             </column>
             <column name="user_id" type="uuid">
-                <constraints nullable="true" referencedTableName="user" referencedColumnNames="id" foreignKeyName="fk_agreement_user_id" />
+                <constraints nullable="true" referencedTableName="imc_user" referencedColumnNames="id"
+                             foreignKeyName="fk_agreement_user_id"/>
             </column>
-             <column name="agreed_with" type="uuid">
-                <constraints nullable="true" referencedTableName="user" referencedColumnNames="id" foreignKeyName="fk_agreed_with_user_id" />
+            <column name="agreed_with" type="uuid">
+                <constraints nullable="true" referencedTableName="imc_user" referencedColumnNames="id"
+                             foreignKeyName="fk_agreed_with_user_id"/>
             </column>
 
-             <column name="created_at" type="timestamp" defaultValueComputed="NOW()" />
-            <column name="updated_at" type="timestamp" defaultValueComputed="NOW()" />
+            <column name="created_at" type="timestamp" defaultValueComputed="NOW()"/>
+            <column name="updated_at" type="timestamp" defaultValueComputed="NOW()"/>
         </createTable>
     </changeSet>
 
-        <changeSet id="8" author="aamirnawaz" labels="feedback" context="imc-apis">
+    <changeSet id="8" author="aamirnawaz" labels="feedback" context="imc-apis">
         <createTable tableName="feedback">
-              <column name="id" type="BIGINT" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false" />
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
             </column>
-             <column name="message" type="text">
-                <constraints nullable="true" />
+            <column name="message" type="text">
+                <constraints nullable="true"/>
             </column>
             <column name="rating" type="integer">
-                <constraints nullable="true" />
-            </column>
-  
-            <column name="rated_to" type="uuid">
-                <constraints nullable="true" referencedTableName="user" referencedColumnNames="id" foreignKeyName="fk_rated_to_user_id" />
-            </column>
-             <column name="rated_by" type="uuid">
-                <constraints nullable="true" referencedTableName="user" referencedColumnNames="id" foreignKeyName="fk_rated_by_user_id" />
+                <constraints nullable="true"/>
             </column>
 
-             <column name="created_at" type="timestamp" defaultValueComputed="NOW()" />
-            <column name="updated_at" type="timestamp" defaultValueComputed="NOW()" />
+            <column name="rated_to" type="uuid">
+                <constraints nullable="true" referencedTableName="imc_user" referencedColumnNames="id"
+                             foreignKeyName="fk_rated_to_user_id"/>
+            </column>
+            <column name="rated_by" type="uuid">
+                <constraints nullable="true" referencedTableName="imc_user" referencedColumnNames="id"
+                             foreignKeyName="fk_rated_by_user_id"/>
+            </column>
+
+            <column name="created_at" type="timestamp" defaultValueComputed="NOW()"/>
+            <column name="updated_at" type="timestamp" defaultValueComputed="NOW()"/>
         </createTable>
     </changeSet>
 
     <changeSet id="9" author="aamirnawaz" labels="order" context="imc-apis">
         <createTable tableName="order">
-              <column name="id" type="BIGINT" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false" />
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
             </column>
-             <column name="order_number" type="text">
-                <constraints nullable="true" />
+            <column name="order_number" type="text">
+                <constraints nullable="true"/>
             </column>
             <column name="order_qty" type="integer">
-                <constraints nullable="true" />
+                <constraints nullable="true"/>
             </column>
-             <column name="order_status" type="boolean" defaultValueBoolean="false">
-                <constraints nullable="true" />
+            <column name="order_status" type="boolean" defaultValueBoolean="false">
+                <constraints nullable="true"/>
             </column>
-             <column name="amount" type="integer">
-                <constraints nullable="true" />
+            <column name="amount" type="integer">
+                <constraints nullable="true"/>
             </column>
-             <column name="is_paid" type="boolean" defaultValueBoolean="false">
-                <constraints nullable="true" />
+            <column name="is_paid" type="boolean" defaultValueBoolean="false">
+                <constraints nullable="true"/>
             </column>
-             <column name="paymentMode" type="text">
-                <constraints nullable="true" />
+            <column name="paymentMode" type="text">
+                <constraints nullable="true"/>
             </column>
-             <column name="is_deleted" type="boolean" defaultValueBoolean="false">
-                <constraints nullable="true" />
+            <column name="is_deleted" type="boolean" defaultValueBoolean="false">
+                <constraints nullable="true"/>
             </column>
-             <column name="contact" type="integer">
-                <constraints nullable="true" />
+            <column name="contact" type="integer">
+                <constraints nullable="true"/>
             </column>
-             <column name="address" type="text">
-                <constraints nullable="true" />
+            <column name="address" type="text">
+                <constraints nullable="true"/>
             </column>
- 
+
             <column name="customer_id" type="uuid">
-                <constraints nullable="true" referencedTableName="user" referencedColumnNames="id" foreignKeyName="fk_order_customer_id" />
+                <constraints nullable="true" referencedTableName="imc_user" referencedColumnNames="id"
+                             foreignKeyName="fk_order_customer_id"/>
             </column>
 
             <column name="services" type="integer">
-                <constraints nullable="true" referencedTableName="service" referencedColumnNames="id" foreignKeyName="fk_order_service_id" />
+                <constraints nullable="true" referencedTableName="service" referencedColumnNames="id"
+                             foreignKeyName="fk_order_service_id"/>
             </column>
 
-             <column name="created_at" type="timestamp" defaultValueComputed="NOW()" />
-            <column name="updated_at" type="timestamp" defaultValueComputed="NOW()" />
+            <column name="created_at" type="timestamp" defaultValueComputed="NOW()"/>
+            <column name="updated_at" type="timestamp" defaultValueComputed="NOW()"/>
         </createTable>
     </changeSet>
 
 
     <!-- Add Column is_delete in user table -->
-    <changeSet id="10" author="aamirnawaz" labels="user" context="imc-apis">
-        <addColumn tableName="user">
+    <changeSet id="10" author="aamirnawaz" labels="imc_user" context="imc-apis">
+        <addColumn tableName="imc_user">
             <column name="is_deleted" type="boolean" defaultValueBoolean="false">
-                <constraints nullable="true" />
+                <constraints nullable="true"/>
             </column>
         </addColumn>
     </changeSet>
 
-<!-- Creating User role_id fk in user table -->
-    <changeSet id="11" author="aamirnawaz" labels="role" context="imc-apis">
-        <addColumn tableName="user">
-            <column name="role_id" type="BIGINT">
-                <constraints nullable="true" referencedTableName="role" referencedColumnNames="id" foreignKeyName="fk_user_role_id" />
-            </column>
-        </addColumn>
-    </changeSet>
-
-    <!-- service_provider_type_id -->
-        <changeSet id="12" author="aamirnawaz" labels="sp_type" context="imc-apis">
-        <addColumn tableName="user">
-            <column name="service_provider_type_id" type="BIGINT">
-                <constraints nullable="true" referencedTableName="sp_type" referencedColumnNames="id" foreignKeyName="fk_user_service_provider_type_id" />
-            </column>
-        </addColumn>
-    </changeSet>
-
-    <!-- qualification_id -->
-     <changeSet id="13" author="aamirnawaz" labels="qualification" context="imc-apis">
-        <addColumn tableName="user">
-            <column name="qualification_id" type="BIGINT">
-                <constraints nullable="true" referencedTableName="qualification" referencedColumnNames="id" foreignKeyName="fk_user_qualification_id" />
-            </column>
-        </addColumn>
-    </changeSet>
 
     <!-- order id refrence in service table-->
- <changeSet id="14" author="aamirnawaz" labels="service" context="imc-apis">
+    <changeSet id="11" author="aamirnawaz" labels="service" context="imc-apis">
         <addColumn tableName="service">
             <column name="order_id" type="BIGINT">
-                <constraints nullable="true" referencedTableName="order" referencedColumnNames="id" foreignKeyName="fk_service_order_id" />
+                <constraints nullable="true" referencedTableName="order" referencedColumnNames="id"
+                             foreignKeyName="fk_service_order_id"/>
             </column>
         </addColumn>
     </changeSet>
 
-<!-- Add image column in service table -->
-     <changeSet id="15" author="aamirnawaz" labels="service" context="imc-apis">
+    <!-- Add image column in service table -->
+    <changeSet id="12" author="aamirnawaz" labels="service" context="imc-apis">
         <addColumn tableName="service">
             <column name="image" type="text">
                 <constraints nullable="true"/>
@@ -276,5 +256,68 @@
         </addColumn>
     </changeSet>
 
+    <!-- Create user_roles table -->
+    <changeSet id="13" author="aamirnawaz" labels="userRolesTable" context="imc-api">
+        <createTable tableName="imc_user_roles">
+            <column name="user_id" type="uuid">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="role_id" type="BIGINT">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <!-- Add foreign key constraints -->
+    <changeSet id="14" author="aamirnawaz" labels="userRolesTable" context="imc-api">
+        <addForeignKeyConstraint
+                baseTableName="imc_user_roles"
+                baseColumnNames="user_id"
+                constraintName="fk_user_roles_user"
+                referencedTableName="imc_user"
+                referencedColumnNames="id"
+                onDelete="CASCADE"
+                onUpdate="CASCADE"/>
+        <addForeignKeyConstraint
+                baseTableName="imc_user_roles"
+                baseColumnNames="role_id"
+                constraintName="fk_user_roles_role"
+                referencedTableName="role"
+                referencedColumnNames="id"
+                onDelete="CASCADE"
+                onUpdate="CASCADE"/>
+    </changeSet>
+
+    <!-- qualification_id -->
+    <!--    <changeSet id="11" author="aamirnawaz" labels="qualification" context="imc-apis">-->
+    <!--        <addColumn tableName="user">-->
+    <!--            <column name="qualification_id" type="BIGINT">-->
+    <!--                <constraints nullable="true" referencedTableName="qualification" referencedColumnNames="id"-->
+    <!--                             foreignKeyName="fk_user_qualification_id"/>-->
+    <!--            </column>-->
+    <!--        </addColumn>-->
+    <!--    </changeSet>-->
+
+    <!-- service_provider_type_id -->
+    <!--    <changeSet id="11" author="aamirnawaz" labels="sp_type" context="imc-apis">-->
+    <!--        <addColumn tableName="user">-->
+    <!--            <column name="service_provider_type_id" type="BIGINT">-->
+    <!--                <constraints nullable="true" referencedTableName="sp_type" referencedColumnNames="id"-->
+    <!--                             foreignKeyName="fk_user_service_provider_type_id"/>-->
+    <!--            </column>-->
+    <!--        </addColumn>-->
+    <!--    </changeSet>-->
+
+    <!--    The below for creating role with user fk foreign key is not need before above we have already
+    created  user_role junction table which fulfil our requirments-->
+    <!-- Creating User role_id fk in user table -->
+    <!--    <changeSet id="11" author="aamirnawaz" labels="role" context="imc-apis">-->
+    <!--        <addColumn tableName="user">-->
+    <!--            <column name="role_id" type="BIGINT">-->
+    <!--                <constraints nullable="true" referencedTableName="role" referencedColumnNames="id"-->
+    <!--                             foreignKeyName="fk_user_role_id"/>-->
+    <!--            </column>-->
+    <!--        </addColumn>-->
+    <!--    </changeSet>-->
 
 </databaseChangeLog>

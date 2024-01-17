@@ -1,6 +1,5 @@
 package com.imcjava.dto.qualificationDto;
 
-import com.imcjava.models.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,5 +10,5 @@ import lombok.NoArgsConstructor;
 public class QualificationRequest {
     private String qualification;
     private String experience;
-    private User user;
+    private Long user;
 }
