@@ -30,7 +30,6 @@ public class LoginController {
         this.jwtUtil = jwtUtil;
     }
 
-
     @PostMapping("/signup")
     public ResponseEntity<String> signup(@RequestBody SignupRequest signupRequest) {
         return myUserService.signup(signupRequest);
@@ -40,8 +39,7 @@ public class LoginController {
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
         try {
             authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword())
-            );
+                    new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
         } catch (AuthenticationException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
@@ -57,6 +55,5 @@ public class LoginController {
         return ResponseEntity.ok().body(new LoginResponse(token));
 
     }
-
 
 }
