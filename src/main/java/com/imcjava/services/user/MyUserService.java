@@ -49,7 +49,7 @@ public class MyUserService implements UserDetailsService {
                 .map(role -> new SimpleGrantedAuthority(role.getName()))
                 .collect(Collectors.toList());
 
-        //here pass email, pass and authorites to Spring builtin User as params
+        //here pass email, pass and authorities to Spring builtin User as params
         return new org.springframework.security.core.userdetails.User(myUser.getEmail(), myUser.getPassword(), authorities);
     }
 
