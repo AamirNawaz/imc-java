@@ -3,31 +3,33 @@ package com.imcjava.controllers.admin;
 import com.imcjava.dto.feedbackDto.FeedbackRequest;
 import com.imcjava.models.Feedback;
 import com.imcjava.services.feedback.IFeedbackService;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import com.imcjava.utils.CommonUtil;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/admin/feedback")
 public class ManageFeedback {
     private final IFeedbackService iFeedbackService;
+    private final CommonUtil commonUtil;
 
-    public ManageFeedback(IFeedbackService iFeedbackService) {
+    public ManageFeedback(IFeedbackService iFeedbackService, CommonUtil commonUtil) {
         this.iFeedbackService = iFeedbackService;
+        this.commonUtil = commonUtil;
     }
 
     @PostMapping
     public Feedback createRole(@RequestBody FeedbackRequest feedbackRequest) {
-        String userId = getUserIdFromAuthentication();
-
-        return iFeedbackService.create(feedbackRequest);
+        String currentUserId = commonUtil.getUserIdFromAuthentication();
+        return iFeedbackService.create(UUID.fromString(currentUserId), feedbackRequest);
     }
 
     @GetMapping
     public List<Feedback> get() {
-        return iFeedbackService.get();
+        String currentUserId = commonUtil.getUserIdFromAuthentication();
+        return iFeedbackService.get(UUID.fromString(currentUserId));
     }
 
     @GetMapping("/{id}")
@@ -40,12 +42,5 @@ public class ManageFeedback {
         return iFeedbackService.Delete(id);
     }
 
-    private String getUserIdFromAuthentication() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.getDetails() instanceof String) {
-            return (String) authentication.getDetails();
-        }
-        // Handle the case where userId is not found, return null, or throw an exception as needed
-        return null;
-    }
+
 }
