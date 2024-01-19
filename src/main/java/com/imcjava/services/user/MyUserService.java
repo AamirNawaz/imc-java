@@ -34,6 +34,7 @@ public class MyUserService implements UserDetailsService {
         this.roleRepository = roleRepository;
     }
 
+
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User myUser = userRepository.findByEmail(email)
@@ -48,10 +49,8 @@ public class MyUserService implements UserDetailsService {
                 .map(role -> new SimpleGrantedAuthority(role.getName()))
                 .collect(Collectors.toList());
 
-        //here pass email, pass and authorites to Spring builtin User as params
+        //here pass email, pass and authorities to Spring builtin User as params
         return new org.springframework.security.core.userdetails.User(myUser.getEmail(), myUser.getPassword(), authorities);
-
-
     }
 
     public ResponseEntity<String> signup(SignupRequest signupRequest) {
@@ -75,5 +74,10 @@ public class MyUserService implements UserDetailsService {
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getLocalizedMessage());
         }
+    }
+
+    public String GetUserDataByEmail(String email) {
+        return userRepository.getUserIdByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("Email not found!"));
     }
 }

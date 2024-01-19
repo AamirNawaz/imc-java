@@ -3,35 +3,44 @@ package com.imcjava.controllers.admin;
 import com.imcjava.dto.feedbackDto.FeedbackRequest;
 import com.imcjava.models.Feedback;
 import com.imcjava.services.feedback.IFeedbackService;
+import com.imcjava.utils.CommonUtil;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
-@RequestMapping("/feedback")
+@RequestMapping("/admin/feedback")
 public class ManageFeedback {
     private final IFeedbackService iFeedbackService;
+    private final CommonUtil commonUtil;
 
-    public ManageFeedback(IFeedbackService iFeedbackService) {
+    public ManageFeedback(IFeedbackService iFeedbackService, CommonUtil commonUtil) {
         this.iFeedbackService = iFeedbackService;
+        this.commonUtil = commonUtil;
     }
+
     @PostMapping
-    public Feedback createRole(@RequestBody FeedbackRequest feedbackRequest){
-        return iFeedbackService.create(feedbackRequest);
+    public Feedback createRole(@RequestBody FeedbackRequest feedbackRequest) {
+        String currentUserId = commonUtil.getUserIdFromAuthentication();
+        return iFeedbackService.create(UUID.fromString(currentUserId), feedbackRequest);
     }
 
     @GetMapping
-    public List<Feedback> get(){
-        return iFeedbackService.get();
+    public List<Feedback> get() {
+        String currentUserId = commonUtil.getUserIdFromAuthentication();
+        return iFeedbackService.get(UUID.fromString(currentUserId));
     }
 
     @GetMapping("/{id}")
-    public Feedback getRole(@PathVariable Long id){
+    public Feedback getRole(@PathVariable Long id) {
         return iFeedbackService.getById(id);
     }
 
     @DeleteMapping("/{id}")
-    public String deleteRole(@PathVariable Long id){
+    public String deleteRole(@PathVariable Long id) {
         return iFeedbackService.Delete(id);
     }
+
+
 }

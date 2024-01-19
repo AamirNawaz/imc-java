@@ -47,11 +47,16 @@ public class LoginController {
         UserDetails userDetails;
         try {
             userDetails = myUserService.loadUserByUsername(loginRequest.getEmail());
+
         } catch (UsernameNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
 
-        String token = jwtUtil.generateToken(userDetails);
+        //later i will update this to get only userId etc
+        String userId = myUserService.GetUserDataByEmail(loginRequest.getEmail());
+        String token = jwtUtil.generateToken(userDetails, userId);
+
+//        String token = jwtUtil.generateToken(userDetails);
         return ResponseEntity.ok().body(new LoginResponse(token));
 
     }

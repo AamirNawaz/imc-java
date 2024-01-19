@@ -11,6 +11,5 @@ import lombok.NoArgsConstructor;
 public class FeedbackRequest {
     private String message;
     private User ratedTo;
-    private User ratedBy;
     private Integer rating;
 }
