@@ -18,7 +18,7 @@ public class IRoleService implements RoleService {
 
     @Override
     public RoleResponse create(RoleRequest roleRequest) {
-        String capitalizeRoleName = "ROLE_" + roleRequest.getName().substring(0, 1).toUpperCase() + roleRequest.getName().substring(1);
+        String capitalizeRoleName = "ROLE_" + roleRequest.getName().toUpperCase();
         Role role = new Role();
         role.setName(roleRequest.getName());
         Role createdRole = roleRepository.save(role);
