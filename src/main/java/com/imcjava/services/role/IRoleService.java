@@ -10,7 +10,7 @@ import java.util.List;
 
 @Service
 public class IRoleService implements RoleService {
-     private final RoleRepository roleRepository;
+    private final RoleRepository roleRepository;
 
     public IRoleService(RoleRepository roleRepository) {
         this.roleRepository = roleRepository;
@@ -18,14 +18,15 @@ public class IRoleService implements RoleService {
 
     @Override
     public RoleResponse create(RoleRequest roleRequest) {
+        String capitalizeRoleName = "ROLE_" + roleRequest.getName().substring(0, 1).toUpperCase() + roleRequest.getName().substring(1);
         Role role = new Role();
         role.setName(roleRequest.getName());
-        Role createdRole =  roleRepository.save(role);
+        Role createdRole = roleRepository.save(role);
 
         //making response
         RoleResponse roleResponse = new RoleResponse();
         roleResponse.setId(createdRole.getId());
-        roleResponse.setName(createdRole.getName());
+        roleResponse.setName(capitalizeRoleName);
         roleResponse.setCreatedAt(createdRole.getCreatedAt());
         roleResponse.setUpdatedAt(createdRole.getUpdatedAt());
         return roleResponse;
@@ -38,12 +39,12 @@ public class IRoleService implements RoleService {
 
     @Override
     public Role getById(Long id) {
-        return roleRepository.findById(id).orElseThrow(()-> new RuntimeException("Record not found!"));
+        return roleRepository.findById(id).orElseThrow(() -> new RuntimeException("Record not found!"));
     }
 
     @Override
     public String Delete(Long id) {
-         roleRepository.deleteById(id);
-        return "Record No:"+id+" deleted successfully!";
+        roleRepository.deleteById(id);
+        return "Record No:" + id + " deleted successfully!";
     }
 }
