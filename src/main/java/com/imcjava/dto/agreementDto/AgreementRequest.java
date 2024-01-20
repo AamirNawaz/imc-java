@@ -10,6 +10,5 @@ import lombok.NoArgsConstructor;
 @Data
 public class AgreementRequest {
     private Boolean isAgreed;
-    private User user;
     private User agreedWith;
 }

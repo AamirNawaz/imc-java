@@ -3,6 +3,7 @@ package com.imcjava.controllers.admin;
 import com.imcjava.dto.agreementDto.AgreementRequest;
 import com.imcjava.models.Agreement;
 import com.imcjava.services.agreement.IAgreementService;
+import com.imcjava.utils.CommonUtil;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,13 +12,13 @@ import java.util.List;
 @RequestMapping("/admin/agreement")
 public class ManageAgreement {
     private final IAgreementService iAgreementService;
-
-    public ManageAgreement(IAgreementService iAgreementService) {
+    
+    public ManageAgreement(IAgreementService iAgreementService, CommonUtil commonUtil) {
         this.iAgreementService = iAgreementService;
     }
 
     @PostMapping
-    public Agreement createRole(@RequestBody AgreementRequest agreementRequest) {
+    public Agreement create(@RequestBody AgreementRequest agreementRequest) {
         return iAgreementService.create(agreementRequest);
     }
 
