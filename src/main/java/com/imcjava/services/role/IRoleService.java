@@ -20,7 +20,7 @@ public class IRoleService implements RoleService {
     public RoleResponse create(RoleRequest roleRequest) {
         String capitalizeRoleName = "ROLE_" + roleRequest.getName().toUpperCase();
         Role role = new Role();
-        role.setName(roleRequest.getName());
+        role.setName(capitalizeRoleName);
         Role createdRole = roleRepository.save(role);
 
         //making response

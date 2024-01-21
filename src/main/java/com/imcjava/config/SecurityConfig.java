@@ -38,11 +38,13 @@ public class SecurityConfig {
                         .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
                         //Frontend open routes
                         .requestMatchers("/v3/**", "/swagger-ui/**", "/authController/**").permitAll()
+                        .requestMatchers("/admin/roles/create").permitAll()
                         //Admin routes
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/admin/service/**").hasAnyRole("ADMIN", "SP")
                         //Customer routes
                         .requestMatchers("/customer/**").hasAnyRole("ADMIN", "CUSTOMER")
+                        .requestMatchers("/agreement/**").hasAnyRole("ADMIN", "CUSTOMER", "SP")
                         //Service provider routes
                         .requestMatchers("/service-provider/**").hasAnyRole("ADMIN", "SP")
                         .anyRequest().authenticated()

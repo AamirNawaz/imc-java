@@ -135,9 +135,6 @@
             <column name="is_agreed" type="boolean" defaultValueBoolean="false">
                 <constraints nullable="true"/>
             </column>
-            <column name="is_sent" type="boolean" defaultValueBoolean="false">
-                <constraints nullable="true"/>
-            </column>
             <column name="user_id" type="uuid">
                 <constraints nullable="true" referencedTableName="imc_user" referencedColumnNames="id"
                              foreignKeyName="fk_agreement_user_id"/>

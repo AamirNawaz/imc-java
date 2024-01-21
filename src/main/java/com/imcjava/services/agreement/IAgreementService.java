@@ -35,8 +35,8 @@ public class IAgreementService implements AgreementService {
     }
 
     @Override
-    public List<Agreement> get() {
-        return agreementRepository.findAll();
+    public List<Agreement> get(UUID userId) {
+        return agreementRepository.findAllByUserId(userId);
     }
 
     @Override
