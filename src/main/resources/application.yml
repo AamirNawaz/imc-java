@@ -37,7 +37,7 @@ logging:
   level:
     org:
       springframework:
-        security: TRACE
+        security: DEBUG
 
 
 JWT_SECRET_KEY: MyJWTSecretKey1234567899876543201236Love123345445454545SecuretyKeyJwt

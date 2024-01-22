@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/admin/service")
+@RequestMapping("/service-provider/service")
 public class ManageServices {
 
     private final ISpService iSpService;

@@ -2,21 +2,33 @@ package com.imcjava.services.sp_service;
 
 import com.imcjava.dto.serviceDto.ServiceRequest;
 import com.imcjava.models.ServiceModel;
+import com.imcjava.models.User;
 import com.imcjava.repository.ServiceRepository;
+import com.imcjava.repository.UserRepository;
+import com.imcjava.utils.CommonUtil;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ISpService implements SpService {
     private final ServiceRepository serviceRepository;
+    private final CommonUtil commonUtil;
+    private final UserRepository userRepository;
 
-    public ISpService(ServiceRepository serviceRepository) {
+    public ISpService(ServiceRepository serviceRepository, CommonUtil commonUtil, UserRepository userRepository) {
         this.serviceRepository = serviceRepository;
+        this.commonUtil = commonUtil;
+        this.userRepository = userRepository;
     }
 
     @Override
     public ServiceModel create(ServiceRequest serviceRequest) {
+        String loggedInUserId = commonUtil.getUserIdFromAuthentication();
+        User fetchedUser = userRepository.findById(UUID.fromString(loggedInUserId)).orElseThrow(() -> new EntityNotFoundException("User not found!"));
+
         ServiceModel serviceModel = new ServiceModel();
         serviceModel.setName(serviceRequest.getName());
         serviceModel.setCharges(serviceRequest.getCharges());
@@ -24,8 +36,7 @@ public class ISpService implements SpService {
         serviceModel.setImage(serviceRequest.getImage());
         serviceModel.setAvailableQty(serviceRequest.getAvailableQty());
         serviceModel.setTotalQty(serviceRequest.getTotalQty());
-        serviceModel.setOrder(serviceRequest.getOrder());
-        serviceModel.setUser(serviceRequest.getUser());
+        serviceModel.setUser(fetchedUser);
         return serviceRepository.save(serviceModel);
     }
 
@@ -42,6 +53,6 @@ public class ISpService implements SpService {
     @Override
     public String Delete(Long id) {
         serviceRepository.deleteById(id);
-        return "Record No:"+id+" deleted successfully!";
+        return "Record No:" + id + " deleted successfully!";
     }
 }
