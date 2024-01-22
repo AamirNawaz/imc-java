@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Table(name = "imc_agreements")
 public class Agreement implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

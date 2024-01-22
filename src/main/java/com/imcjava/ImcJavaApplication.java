@@ -10,4 +10,21 @@ public class ImcJavaApplication {
         SpringApplication.run(ImcJavaApplication.class, args);
     }
 
+
+    //creating roles
+//    public CommandLineRunner commandLineRunner(RoleRepository roleRepository) {
+//        return args -> {
+//            var adminRole = new Role();
+//            adminRole.setName("admin");
+//            roleRepository.save(adminRole);
+//
+//            var customerRole = new Role();
+//            customerRole.setName("admin");
+//            roleRepository.save(customerRole);
+//
+//            var spRole = new Role();
+//            spRole.setName("admin");
+//            roleRepository.save(spRole);
+//        };
+//    }
 }

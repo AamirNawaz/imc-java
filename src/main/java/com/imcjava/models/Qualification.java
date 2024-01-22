@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Table(name = "qualification")
+@Table(name = "imc_qualifications")
 public class Qualification implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,8 +22,9 @@ public class Qualification implements Serializable {
     private String qualification;
     private String experience;
 
+    @OneToOne
     @JoinColumn(name = "user_id")
-    private Long user;
+    private User user;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)

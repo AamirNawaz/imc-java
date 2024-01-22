@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "service")
+@Table(name = "imc_services")
 public class ServiceModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,6 +30,10 @@ public class ServiceModel implements Serializable {
     private User user;
 
     private Boolean status;
+
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    private Order imcOrder;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
