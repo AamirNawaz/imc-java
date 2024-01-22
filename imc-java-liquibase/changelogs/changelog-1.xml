@@ -6,7 +6,7 @@
     <!-- imc_user table -->
     <changeSet id="1" author="aamirnawaz" labels="imc_user" context="imc-apis">
         <comment>This changelog is for creating imc user table</comment>
-        <createTable tableName="imc_user">
+        <createTable tableName="imc_users">
             <column name="id" type="uuid">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -25,7 +25,7 @@
     <!-- Role Table -->
     <changeSet id="2" author="aamirnawaz" labels="role" context="imc-apis">
         <comment>This changelog is for creating imc roles table</comment>
-        <createTable tableName="role">
+        <createTable tableName="imc_roles">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -40,7 +40,7 @@
 
     <!-- Service Table -->
     <changeSet id="3" author="aamirnawaz" labels="service" context="imc-apis">
-        <createTable tableName="service">
+        <createTable tableName="imc_services">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -61,7 +61,7 @@
             </column>
 
             <column name="created_by" type="uuid">
-                <constraints nullable="true" referencedTableName="imc_user" referencedColumnNames="id"
+                <constraints nullable="true" referencedTableName="imc_users" referencedColumnNames="id"
                              foreignKeyName="fk_created_by"/>
             </column>
 
@@ -72,7 +72,7 @@
 
     <!-- ServiceProviderTypes Table -->
     <changeSet id="4" author="aamirnawaz" labels="service-provider-types" context="imc-apis">
-        <createTable tableName="sp_type">
+        <createTable tableName="imc_sp_types">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -83,11 +83,9 @@
             <column name="updated_at" type="timestamp" defaultValueComputed="NOW()"/>
         </createTable>
     </changeSet>
-
-
     <!-- User Qualification Table -->
     <changeSet id="5" author="aamirnawaz" labels="qualification" context="imc-apis">
-        <createTable tableName="qualification">
+        <createTable tableName="imc_qualifications">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -98,17 +96,16 @@
                 <constraints nullable="true"/>
             </column>
             <column name="user_id" type="uuid">
-                <constraints nullable="true" referencedTableName="imc_user" referencedColumnNames="id"
+                <constraints nullable="true" referencedTableName="imc_users" referencedColumnNames="id"
                              foreignKeyName="fk_qualification_user_id"/>
             </column>
             <column name="created_at" type="timestamp" defaultValueComputed="NOW()"/>
             <column name="updated_at" type="timestamp" defaultValueComputed="NOW()"/>
         </createTable>
     </changeSet>
-
     <!-- User promotion Table -->
     <changeSet id="6" author="aamirnawaz" labels="promotion" context="imc-apis">
-        <createTable tableName="promotion">
+        <createTable tableName="imc_promotions">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -119,7 +116,7 @@
                 <constraints nullable="true"/>
             </column>
             <column name="user_id" type="uuid">
-                <constraints nullable="true" referencedTableName="imc_user" referencedColumnNames="id"
+                <constraints nullable="true" referencedTableName="imc_users" referencedColumnNames="id"
                              foreignKeyName="fk_qualification_user_id"/>
             </column>
             <column name="created_at" type="timestamp" defaultValueComputed="NOW()"/>
@@ -128,7 +125,7 @@
     </changeSet>
 
     <changeSet id="7" author="aamirnawaz" labels="agreement" context="imc-apis">
-        <createTable tableName="agreement">
+        <createTable tableName="imc_agreements">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -136,11 +133,11 @@
                 <constraints nullable="true"/>
             </column>
             <column name="user_id" type="uuid">
-                <constraints nullable="true" referencedTableName="imc_user" referencedColumnNames="id"
+                <constraints nullable="true" referencedTableName="imc_users" referencedColumnNames="id"
                              foreignKeyName="fk_agreement_user_id"/>
             </column>
             <column name="agreed_with" type="uuid">
-                <constraints nullable="true" referencedTableName="imc_user" referencedColumnNames="id"
+                <constraints nullable="true" referencedTableName="imc_users" referencedColumnNames="id"
                              foreignKeyName="fk_agreed_with_user_id"/>
             </column>
 
@@ -150,7 +147,7 @@
     </changeSet>
 
     <changeSet id="8" author="aamirnawaz" labels="feedback" context="imc-apis">
-        <createTable tableName="feedback">
+        <createTable tableName="imc_feedbacks">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -162,11 +159,11 @@
             </column>
 
             <column name="rated_to" type="uuid">
-                <constraints nullable="true" referencedTableName="imc_user" referencedColumnNames="id"
+                <constraints nullable="true" referencedTableName="imc_users" referencedColumnNames="id"
                              foreignKeyName="fk_rated_to_user_id"/>
             </column>
             <column name="rated_by" type="uuid">
-                <constraints nullable="true" referencedTableName="imc_user" referencedColumnNames="id"
+                <constraints nullable="true" referencedTableName="imc_users" referencedColumnNames="id"
                              foreignKeyName="fk_rated_by_user_id"/>
             </column>
 
@@ -176,7 +173,7 @@
     </changeSet>
 
     <changeSet id="9" author="aamirnawaz" labels="order" context="imc-apis">
-        <createTable tableName="order">
+        <createTable tableName="imc_orders">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -209,12 +206,12 @@
             </column>
 
             <column name="customer_id" type="uuid">
-                <constraints nullable="true" referencedTableName="imc_user" referencedColumnNames="id"
+                <constraints nullable="true" referencedTableName="imc_users" referencedColumnNames="id"
                              foreignKeyName="fk_order_customer_id"/>
             </column>
 
             <column name="services" type="integer">
-                <constraints nullable="true" referencedTableName="service" referencedColumnNames="id"
+                <constraints nullable="true" referencedTableName="imc_services" referencedColumnNames="id"
                              foreignKeyName="fk_order_service_id"/>
             </column>
 
@@ -226,7 +223,7 @@
 
     <!-- Add Column is_delete in user table -->
     <changeSet id="10" author="aamirnawaz" labels="imc_user" context="imc-apis">
-        <addColumn tableName="imc_user">
+        <addColumn tableName="imc_users">
             <column name="is_deleted" type="boolean" defaultValueBoolean="false">
                 <constraints nullable="true"/>
             </column>
@@ -236,7 +233,7 @@
 
     <!-- Add image column in service table -->
     <changeSet id="11" author="aamirnawaz" labels="service" context="imc-apis">
-        <addColumn tableName="service">
+        <addColumn tableName="imc_services">
             <column name="image" type="text">
                 <constraints nullable="true"/>
             </column>
@@ -261,7 +258,7 @@
                 baseTableName="imc_user_roles"
                 baseColumnNames="user_id"
                 constraintName="fk_user_roles_user"
-                referencedTableName="imc_user"
+                referencedTableName="imc_users"
                 referencedColumnNames="id"
                 onDelete="CASCADE"
                 onUpdate="CASCADE"/>
@@ -269,10 +266,27 @@
                 baseTableName="imc_user_roles"
                 baseColumnNames="role_id"
                 constraintName="fk_user_roles_role"
-                referencedTableName="role"
+                referencedTableName="imc_roles"
                 referencedColumnNames="id"
                 onDelete="CASCADE"
                 onUpdate="CASCADE"/>
+    </changeSet>
+
+
+    <changeSet id="14" author="aamirnawaz" labels="service_tbl_having_order_id" context="imc-api">
+        <addColumn tableName="imc_services">
+            <column name="order_id" type="BIGINT"/>
+        </addColumn>
+
+        <addForeignKeyConstraint
+                baseTableName="imc_services"
+                baseColumnNames="order_id"
+                referencedTableName="imc_orders"
+                referencedColumnNames="id"
+                constraintName="fk_service_order_id"
+                onDelete="CASCADE"
+                onUpdate="CASCADE"
+        />
     </changeSet>
 
     <!-- qualification_id -->

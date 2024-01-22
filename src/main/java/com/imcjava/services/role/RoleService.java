@@ -10,8 +10,11 @@ import java.util.List;
 public interface RoleService {
 
     RoleResponse create(RoleRequest roleRequest);
+
     List<Role> get();
+
     Role getById(Long id);
+
     String Delete(Long id);
 }
 
