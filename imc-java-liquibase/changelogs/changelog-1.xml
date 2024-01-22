@@ -135,9 +135,6 @@
             <column name="is_agreed" type="boolean" defaultValueBoolean="false">
                 <constraints nullable="true"/>
             </column>
-            <column name="is_sent" type="boolean" defaultValueBoolean="false">
-                <constraints nullable="true"/>
-            </column>
             <column name="user_id" type="uuid">
                 <constraints nullable="true" referencedTableName="imc_user" referencedColumnNames="id"
                              foreignKeyName="fk_agreement_user_id"/>
@@ -237,18 +234,8 @@
     </changeSet>
 
 
-    <!-- order id refrence in service table-->
-    <changeSet id="11" author="aamirnawaz" labels="service" context="imc-apis">
-        <addColumn tableName="service">
-            <column name="order_id" type="BIGINT">
-                <constraints nullable="true" referencedTableName="order" referencedColumnNames="id"
-                             foreignKeyName="fk_service_order_id"/>
-            </column>
-        </addColumn>
-    </changeSet>
-
     <!-- Add image column in service table -->
-    <changeSet id="12" author="aamirnawaz" labels="service" context="imc-apis">
+    <changeSet id="11" author="aamirnawaz" labels="service" context="imc-apis">
         <addColumn tableName="service">
             <column name="image" type="text">
                 <constraints nullable="true"/>
@@ -257,7 +244,7 @@
     </changeSet>
 
     <!-- Create user_roles table -->
-    <changeSet id="13" author="aamirnawaz" labels="userRolesTable" context="imc-api">
+    <changeSet id="12" author="aamirnawaz" labels="userRolesTable" context="imc-api">
         <createTable tableName="imc_user_roles">
             <column name="user_id" type="uuid">
                 <constraints primaryKey="true" nullable="false"/>
@@ -269,7 +256,7 @@
     </changeSet>
 
     <!-- Add foreign key constraints -->
-    <changeSet id="14" author="aamirnawaz" labels="userRolesTable" context="imc-api">
+    <changeSet id="13" author="aamirnawaz" labels="userRolesTable" context="imc-api">
         <addForeignKeyConstraint
                 baseTableName="imc_user_roles"
                 baseColumnNames="user_id"

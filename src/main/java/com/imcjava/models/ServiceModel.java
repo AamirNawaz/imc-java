@@ -29,10 +29,6 @@ public class ServiceModel implements Serializable {
     @JoinColumn(name = "created_by")
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "order_id")
-    private Order order;
-
     private Boolean status;
 
     @CreationTimestamp

@@ -18,7 +18,7 @@ public class ManageRoles {
         this.iRoleService = iRoleService;
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public RoleResponse createRole(@RequestBody RoleRequest roleRequest) {
         return iRoleService.create(roleRequest);
     }

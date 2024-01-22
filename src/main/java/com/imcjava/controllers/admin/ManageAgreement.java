@@ -7,14 +7,17 @@ import com.imcjava.utils.CommonUtil;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
-@RequestMapping("/admin/agreement")
+@RequestMapping("/agreement")
 public class ManageAgreement {
     private final IAgreementService iAgreementService;
-    
-    public ManageAgreement(IAgreementService iAgreementService, CommonUtil commonUtil) {
+    private final CommonUtil commonUtil;
+
+    public ManageAgreement(IAgreementService iAgreementService, CommonUtil commonUtil, CommonUtil commonUtil1) {
         this.iAgreementService = iAgreementService;
+        this.commonUtil = commonUtil1;
     }
 
     @PostMapping
@@ -24,7 +27,8 @@ public class ManageAgreement {
 
     @GetMapping
     public List<Agreement> get() {
-        return iAgreementService.get();
+        String loggedInUserId = commonUtil.getUserIdFromAuthentication();
+        return iAgreementService.get(UUID.fromString(loggedInUserId));
     }
 
     @GetMapping("/{id}")
