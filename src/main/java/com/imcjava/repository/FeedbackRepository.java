@@ -10,6 +10,6 @@ import java.util.UUID;
 
 public interface FeedbackRepository extends JpaRepository<Feedback, Long> {
 
-    @Query(value = "select * from feedback where rated_by = :userId", nativeQuery = true)
+    @Query(value = "select * from feedbacks where rated_by = :userId", nativeQuery = true)
     List<Feedback> findByRatedBy(@Param("userId") UUID userId);
 }

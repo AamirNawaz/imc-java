@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/admin/order")
+@RequestMapping("/customer/orders")
 @RequiredArgsConstructor
 public class ManageOrder {
     private final IOrderService iOrderService;
 
-    @PostMapping
+    @PostMapping("/place-order")
     public Order create(@RequestBody OrderRequest orderRequest) {
         return iOrderService.create(orderRequest);
     }

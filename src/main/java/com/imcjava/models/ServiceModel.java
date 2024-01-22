@@ -31,7 +31,7 @@ public class ServiceModel implements Serializable {
 
     private Boolean status;
 
-    @ManyToOne
+    @ManyToOne(optional = true)
     @JoinColumn(name = "order_id")
     private Order imcOrder;
 

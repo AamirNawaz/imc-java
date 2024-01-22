@@ -11,20 +11,22 @@ public class ImcJavaApplication {
     }
 
 
-    //creating roles
+//    @Bean
 //    public CommandLineRunner commandLineRunner(RoleRepository roleRepository) {
 //        return args -> {
 //            var adminRole = new Role();
-//            adminRole.setName("admin");
+//            adminRole.setName("ROLE_ADMIN");
 //            roleRepository.save(adminRole);
 //
 //            var customerRole = new Role();
-//            customerRole.setName("admin");
+//            customerRole.setName("ROLE_CUSTOMER");
 //            roleRepository.save(customerRole);
 //
 //            var spRole = new Role();
-//            spRole.setName("admin");
+//            spRole.setName("ROLE_SP");
 //            roleRepository.save(spRole);
 //        };
 //    }
+
+
 }

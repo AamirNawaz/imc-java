@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -64,9 +65,13 @@ public class MyUserService implements UserDetailsService {
 
             Set<Role> roles = new HashSet<>();
             for (String roleName : signupRequest.getRoles()) {
-                Role role = roleRepository.findByName(roleName)
-                        .orElseThrow(() -> new EntityNotFoundException("Role with name" + roleName + "not found!"));
-                roles.add(role);
+                if (!Objects.equals(roleName, "ROLE_ADMIN")) {
+                    Role role = roleRepository.findByName(roleName)
+                            .orElseThrow(() -> new EntityNotFoundException("Role with name" + roleName + "not found!"));
+                    roles.add(role);
+                } else {
+                    throw new IllegalArgumentException("User can use either , Customer role or Service provider role!");
+                }
             }
             newUser.setRoles(roles);
             userRepository.save(newUser);

@@ -19,27 +19,21 @@ public class IRoleService implements RoleService {
     @Override
     public RoleResponse create(RoleRequest roleRequest) {
         try {
-            if (!"admin".equals(roleRequest.getName())) {
-                String capitalizeRoleName = "ROLE_" + roleRequest.getName().toUpperCase();
+            String capitalizeRoleName = "ROLE_" + roleRequest.getName().toUpperCase();
+            Role role = new Role();
+            role.setName(capitalizeRoleName);
 
-                Role role = new Role();
-                role.setName(capitalizeRoleName);
+            Role createdRole = roleRepository.save(role);
 
-                Role createdRole = roleRepository.save(role);
+            // Making response
+            RoleResponse roleResponse = new RoleResponse();
+            roleResponse.setId(createdRole.getId());
+            roleResponse.setName(capitalizeRoleName);
+            roleResponse.setCreatedAt(createdRole.getCreatedAt());
+            roleResponse.setUpdatedAt(createdRole.getUpdatedAt());
 
-                // Making response
-                RoleResponse roleResponse = new RoleResponse();
-                roleResponse.setId(createdRole.getId());
-                roleResponse.setName(capitalizeRoleName);
-                roleResponse.setCreatedAt(createdRole.getCreatedAt());
-                roleResponse.setUpdatedAt(createdRole.getUpdatedAt());
+            return roleResponse;
 
-                return roleResponse;
-            } else {
-                // Handle case where name is "admin"
-                RoleResponse roleResponse = new RoleResponse();
-                return roleResponse;
-            }
         } catch (RuntimeException e) {
             // Handle exception appropriately, for now returning a simple error message
             throw new IllegalArgumentException(e.getLocalizedMessage());

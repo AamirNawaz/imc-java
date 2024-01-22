@@ -1,6 +1,5 @@
 package com.imcjava.models;
 
-import com.imcjava.models.enums.PaymentMode;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,6 +9,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -27,14 +27,14 @@ public class Order implements Serializable {
     @JoinColumn(name = "customer_id")
     private User customerId;
 
-    @OneToMany(mappedBy = "imcOrder")
-    private List<ServiceModel> services;
+    @OneToMany(mappedBy = "imcOrder", cascade = CascadeType.ALL)
+    private List<ServiceModel> services = new ArrayList<>();
 
     private Integer orderQty;
     private Boolean orderStatus;
     private Integer amount;
     private Boolean isPaid;
-    private PaymentMode paymentMode;
+    private String paymentMode;
     private Boolean isDeleted;
     private Integer contact;
     private String address;
