@@ -1,6 +1,6 @@
 package com.imcjava.dto.orderDto;
 
-import com.imcjava.models.ServiceModel;
+import com.imcjava.models.ImcService;
 import com.imcjava.models.User;
 import com.imcjava.models.enums.PaymentMode;
 import lombok.AllArgsConstructor;
@@ -23,5 +23,5 @@ public class OrderRequest {
     private Boolean isDeleted;
     private Integer contact;
     private String address;
-    private List<ServiceModel> services;
+    private List<ImcService> services;
 }

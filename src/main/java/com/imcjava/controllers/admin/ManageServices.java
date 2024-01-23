@@ -1,7 +1,7 @@
 package com.imcjava.controllers.admin;
 
 import com.imcjava.dto.serviceDto.ServiceRequest;
-import com.imcjava.models.ServiceModel;
+import com.imcjava.models.ImcService;
 import com.imcjava.services.sp_service.ISpService;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,17 +18,17 @@ public class ManageServices {
     }
 
     @PostMapping
-    public ServiceModel create(@RequestBody ServiceRequest serviceRequest) {
+    public ImcService create(@RequestBody ServiceRequest serviceRequest) {
         return iSpService.create(serviceRequest);
     }
 
     @GetMapping
-    public List<ServiceModel> get() {
+    public List<ImcService> get() {
         return iSpService.get();
     }
 
     @GetMapping("/{id}")
-    public ServiceModel getById(@PathVariable Long id) {
+    public ImcService getById(@PathVariable Long id) {
         return iSpService.getById(id);
     }
 

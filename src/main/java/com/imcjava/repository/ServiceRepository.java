@@ -1,7 +1,7 @@
 package com.imcjava.repository;
 
-import com.imcjava.models.ServiceModel;
+import com.imcjava.models.ImcService;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ServiceRepository extends JpaRepository<ServiceModel,Long> {
+public interface ServiceRepository extends JpaRepository<ImcService, Long> {
 }
