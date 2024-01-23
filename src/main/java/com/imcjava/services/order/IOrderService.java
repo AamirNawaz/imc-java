@@ -20,7 +20,7 @@ public class IOrderService implements OrderService {
         Order newOrder = new Order();
         newOrder.setOrderNumber(orderRequest.getOrderNumber());
         newOrder.setOrderStatus(orderRequest.getOrderStatus());
-        newOrder.setCustomerId(orderRequest.getCustomerId());
+//        newOrder.setCustomerId(orderRequest.getCustomerId());
         newOrder.setAddress(orderRequest.getAddress());
         newOrder.setAmount(orderRequest.getAmount());
         newOrder.setContact(orderRequest.getContact());
