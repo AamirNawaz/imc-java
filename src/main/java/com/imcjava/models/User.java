@@ -22,7 +22,7 @@ import java.util.UUID;
 public class User implements Serializable {
     @Id
     @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @GenericGenerator(name = "uuid2")
     @Column(name = "id", columnDefinition = "VARCHAR(255)")
     private UUID id;
     private String name;
@@ -36,7 +36,7 @@ public class User implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles = new HashSet<>();
-    
+
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
