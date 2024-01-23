@@ -1,7 +1,7 @@
 package com.imcjava.services.sp_service;
 
 import com.imcjava.dto.serviceDto.ServiceRequest;
-import com.imcjava.models.ServiceModel;
+import com.imcjava.models.ImcService;
 import com.imcjava.models.User;
 import com.imcjava.repository.ServiceRepository;
 import com.imcjava.repository.UserRepository;
@@ -25,28 +25,27 @@ public class ISpService implements SpService {
     }
 
     @Override
-    public ServiceModel create(ServiceRequest serviceRequest) {
+    public ImcService create(ServiceRequest serviceRequest) {
         String loggedInUserId = commonUtil.getUserIdFromAuthentication();
         User fetchedUser = userRepository.findById(UUID.fromString(loggedInUserId)).orElseThrow(() -> new EntityNotFoundException("User not found!"));
 
-        ServiceModel serviceModel = new ServiceModel();
+        ImcService serviceModel = new ImcService();
         serviceModel.setName(serviceRequest.getName());
         serviceModel.setCharges(serviceRequest.getCharges());
         serviceModel.setStatus(serviceRequest.getStatus());
         serviceModel.setImage(serviceRequest.getImage());
-        serviceModel.setAvailableQty(serviceRequest.getAvailableQty());
         serviceModel.setTotalQty(serviceRequest.getTotalQty());
         serviceModel.setUser(fetchedUser);
         return serviceRepository.save(serviceModel);
     }
 
     @Override
-    public List<ServiceModel> get() {
+    public List<ImcService> get() {
         return serviceRepository.findAll();
     }
 
     @Override
-    public ServiceModel getById(Long id) {
+    public ImcService getById(Long id) {
         return serviceRepository.findById(id).orElseThrow(() -> new RuntimeException("Service not found!"));
     }
 

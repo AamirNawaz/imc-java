@@ -5,6 +5,7 @@ import com.imcjava.dto.LoginResponse;
 import com.imcjava.dto.userDto.SignupRequest;
 import com.imcjava.services.user.MyUserService;
 import com.imcjava.utils.JwtUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/authController")
+@Slf4j
 public class LoginController {
     private final MyUserService myUserService;
     private final AuthenticationManager authenticationManager;
@@ -41,6 +43,7 @@ public class LoginController {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
         } catch (AuthenticationException e) {
+            log.info(e.getLocalizedMessage());
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 

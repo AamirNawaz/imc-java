@@ -35,19 +35,19 @@ public class SecurityConfig {
 //        Configure HttpSecurity to only be applied to URLs that start with /api/
 //            .securityMatcher("/api/**")
                 .authorizeHttpRequests(authorize -> authorize
-                        .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
-                        //Frontend open routes
-                        .requestMatchers("/v3/**", "/swagger-ui/**", "/authController/**").permitAll()
-                        .requestMatchers("/admin/roles/create").permitAll()
-                        //Admin routes
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
-                        //Customer routes
-                        .requestMatchers("/customer/**").hasAnyRole("ADMIN", "CUSTOMER")
-                        .requestMatchers("/agreement/**").hasAnyRole("ADMIN", "CUSTOMER", "SP")
-                        //Service provider routes
-                        .requestMatchers("/service-provider/**").hasAnyRole("ADMIN", "SP")
-                        .requestMatchers("/service-provider/service/**").hasAnyRole("ADMIN", "SP")
-                        .anyRequest().authenticated()
+                                .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
+                                //Frontend open routes
+                                .requestMatchers("/v3/**", "/swagger-ui/**", "/authController/**").permitAll()
+                                .requestMatchers("/admin/roles/**").permitAll()
+                                //Admin routes
+//                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                                //Customer routes
+                                .requestMatchers("/customer/**").hasAnyRole("ADMIN", "CUSTOMER")
+                                .requestMatchers("/agreement/**").hasAnyRole("ADMIN", "CUSTOMER", "SP")
+                                //Service provider routes
+                                .requestMatchers("/service-provider/**").hasAnyRole("ADMIN", "SP")
+                                .requestMatchers("/service-provider/service/**").hasAnyRole("ADMIN", "SP")
+                                .anyRequest().authenticated()
                 )
 
                 .sessionManagement(

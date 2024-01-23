@@ -31,15 +31,15 @@ public class IOrderService implements OrderService {
 
         Order newOrder = new Order();
         newOrder.setOrderNumber(orderRequest.getOrderNumber());
-        newOrder.setOrderQty(orderRequest.getOrderQty());
+
         newOrder.setOrderStatus(orderRequest.getOrderStatus());
         newOrder.setCustomerId(fetchedUser);
-        newOrder.setServices(orderRequest.getServices());
+
         newOrder.setAddress(orderRequest.getAddress());
         newOrder.setAmount(orderRequest.getAmount());
         newOrder.setContact(orderRequest.getContact());
         newOrder.setIsPaid(false);
-        newOrder.setPaymentMode(orderRequest.getPaymentMode());
+
         newOrder.setIsDeleted(false);
         return orderRepository.save(newOrder);
     }
