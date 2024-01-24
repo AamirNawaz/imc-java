@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
     <!-- imc_user table -->
     <changeSet id="1" author="aamirnawaz" labels="imc_user" context="imc-apis">
         <comment>This changelog is for creating imc user table</comment>
@@ -58,7 +59,8 @@
             </column>
 
             <column name="created_by" type="uuid">
-                <constraints nullable="true" referencedTableName="imc_users" referencedColumnNames="id" foreignKeyName="fk_created_by"/>
+                <constraints nullable="true" referencedTableName="imc_users" referencedColumnNames="id"
+                             foreignKeyName="fk_created_by"/>
             </column>
 
             <column name="created_at" type="timestamp" defaultValueComputed="NOW()"/>
@@ -92,7 +94,8 @@
                 <constraints nullable="true"/>
             </column>
             <column name="user_id" type="uuid">
-                <constraints nullable="true" referencedTableName="imc_users" referencedColumnNames="id" foreignKeyName="fk_qualification_user_id"/>
+                <constraints nullable="true" referencedTableName="imc_users" referencedColumnNames="id"
+                             foreignKeyName="fk_qualification_user_id"/>
             </column>
             <column name="created_at" type="timestamp" defaultValueComputed="NOW()"/>
             <column name="updated_at" type="timestamp" defaultValueComputed="NOW()"/>
@@ -111,7 +114,8 @@
                 <constraints nullable="true"/>
             </column>
             <column name="user_id" type="uuid">
-                <constraints nullable="true" referencedTableName="imc_users" referencedColumnNames="id" foreignKeyName="fk_qualification_user_id"/>
+                <constraints nullable="true" referencedTableName="imc_users" referencedColumnNames="id"
+                             foreignKeyName="fk_qualification_user_id"/>
             </column>
             <column name="created_at" type="timestamp" defaultValueComputed="NOW()"/>
             <column name="updated_at" type="timestamp" defaultValueComputed="NOW()"/>
@@ -127,10 +131,12 @@
                 <constraints nullable="true"/>
             </column>
             <column name="user_id" type="uuid">
-                <constraints nullable="true" referencedTableName="imc_users" referencedColumnNames="id" foreignKeyName="fk_agreement_user_id"/>
+                <constraints nullable="true" referencedTableName="imc_users" referencedColumnNames="id"
+                             foreignKeyName="fk_agreement_user_id"/>
             </column>
             <column name="agreed_with" type="uuid">
-                <constraints nullable="true" referencedTableName="imc_users" referencedColumnNames="id" foreignKeyName="fk_agreed_with_user_id"/>
+                <constraints nullable="true" referencedTableName="imc_users" referencedColumnNames="id"
+                             foreignKeyName="fk_agreed_with_user_id"/>
             </column>
 
             <column name="created_at" type="timestamp" defaultValueComputed="NOW()"/>
@@ -151,10 +157,12 @@
             </column>
 
             <column name="rated_to" type="uuid">
-                <constraints nullable="true" referencedTableName="imc_users" referencedColumnNames="id" foreignKeyName="fk_rated_to_user_id"/>
+                <constraints nullable="true" referencedTableName="imc_users" referencedColumnNames="id"
+                             foreignKeyName="fk_rated_to_user_id"/>
             </column>
             <column name="rated_by" type="uuid">
-                <constraints nullable="true" referencedTableName="imc_users" referencedColumnNames="id" foreignKeyName="fk_rated_by_user_id"/>
+                <constraints nullable="true" referencedTableName="imc_users" referencedColumnNames="id"
+                             foreignKeyName="fk_rated_by_user_id"/>
             </column>
 
             <column name="created_at" type="timestamp" defaultValueComputed="NOW()"/>
@@ -190,7 +198,8 @@
             </column>
 
             <column name="customer_id" type="uuid">
-                <constraints nullable="true" referencedTableName="imc_users" referencedColumnNames="id" foreignKeyName="fk_order_customer_id"/>
+                <constraints nullable="true" referencedTableName="imc_users" referencedColumnNames="id"
+                             foreignKeyName="fk_order_customer_id"/>
             </column>
 
             <column name="created_at" type="timestamp" defaultValueComputed="NOW()"/>
@@ -232,8 +241,12 @@
 
     <!-- Add foreign key constraints -->
     <changeSet id="13" author="aamirnawaz" labels="userRolesTable" context="imc-api">
-        <addForeignKeyConstraint baseTableName="imc_user_roles" baseColumnNames="user_id" constraintName="fk_user_roles_user" referencedTableName="imc_users" referencedColumnNames="id" onDelete="CASCADE" onUpdate="CASCADE"/>
-        <addForeignKeyConstraint baseTableName="imc_user_roles" baseColumnNames="role_id" constraintName="fk_user_roles_role" referencedTableName="imc_roles" referencedColumnNames="id" onDelete="CASCADE" onUpdate="CASCADE"/>
+        <addForeignKeyConstraint baseTableName="imc_user_roles" baseColumnNames="user_id"
+                                 constraintName="fk_user_roles_user" referencedTableName="imc_users"
+                                 referencedColumnNames="id" onDelete="CASCADE" onUpdate="CASCADE"/>
+        <addForeignKeyConstraint baseTableName="imc_user_roles" baseColumnNames="role_id"
+                                 constraintName="fk_user_roles_role" referencedTableName="imc_roles"
+                                 referencedColumnNames="id" onDelete="CASCADE" onUpdate="CASCADE"/>
     </changeSet>
 
 
@@ -242,7 +255,9 @@
             <column name="order_id" type="BIGINT"/>
         </addColumn>
 
-        <addForeignKeyConstraint baseTableName="imc_services" baseColumnNames="order_id" referencedTableName="imc_orders" referencedColumnNames="id" constraintName="fk_service_order_id" onDelete="CASCADE" onUpdate="CASCADE" />
+        <addForeignKeyConstraint baseTableName="imc_services" baseColumnNames="order_id"
+                                 referencedTableName="imc_orders" referencedColumnNames="id"
+                                 constraintName="fk_service_order_id" onDelete="CASCADE" onUpdate="CASCADE"/>
     </changeSet>
 
 
@@ -251,14 +266,19 @@
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="order_service_price" type="BIGINT">
+            <column name="order_amount" type="BIGINT">
                 <constraints nullable="true"/>
             </column>
-            <column name="order_qty" type="int">
+
+            <column name="sku_code" type="text">
+                <constraints nullable="true"/>
+            </column>
+            <column name="total_qty" type="int">
                 <constraints nullable="true"/>
             </column>
             <column name="order_id" type="BIGINT">
-                <constraints nullable="true" referencedTableName="imc_orders" referencedColumnNames="id" foreignKeyName="fk_order_id_order_items"/>
+                <constraints nullable="true" referencedTableName="imc_orders" referencedColumnNames="id"
+                             foreignKeyName="fk_order_id_order_items"/>
             </column>
             <column name="created_at" type="timestamp" defaultValueComputed="NOW()"/>
             <column name="updated_at" type="timestamp" defaultValueComputed="NOW()"/>
@@ -267,7 +287,7 @@
 
     <changeSet id="16" author="aamirnawaz" labels="imc_payments" context="imc-apis">
         <createTable tableName="imc_payments">
-            <column name="payment_id" type="BIGINT" autoIncrement="true">
+            <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="payment_method" type="text">
@@ -281,9 +301,23 @@
     <changeSet id="17" author="aamirnawaz" labels="imc_payments" context="imc-apis">
         <addColumn tableName="imc_orders">
             <column name="payment_id" type="BIGINT">
-                <constraints nullable="true" referencedTableName="imc_payments" referencedColumnNames="payment_id" foreignKeyName="fk_order_payment_id"/>
+                <constraints nullable="true" referencedTableName="imc_payments"
+                             referencedColumnNames="id"
+                             foreignKeyName="fk_order_payment_id"/>
             </column>
         </addColumn>
+    </changeSet>
+
+    <!-- Create order orderitems joint table -->
+    <changeSet id="18" author="aamirnawaz" labels="order_items_list" context="imc-api">
+        <createTable tableName="order_items_list">
+            <column name="order_id" type="BIGINT">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="order_item_id" type="BIGINT">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+        </createTable>
     </changeSet>
 
 

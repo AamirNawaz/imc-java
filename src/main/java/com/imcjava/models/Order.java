@@ -1,5 +1,6 @@
 package com.imcjava.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,8 +10,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Data
@@ -29,14 +29,21 @@ public class Order implements Serializable {
     private Integer contact;
     private String address;
 
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "payment_id")
     private Payment payment;
 
+    //    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "order_items_list",
+            joinColumns = @JoinColumn(name = "order_id"),
+            inverseJoinColumns = @JoinColumn(name = "order_item_id")
+    )
+    private List<OrderItem> orderItemList;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
-    private Set<OrderItem> orderItems = new HashSet<>();
-
+    //    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private User customerId;
@@ -49,13 +56,4 @@ public class Order implements Serializable {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    public void add(OrderItem item) {
-        if (item != null) {
-            if (orderItems == null) {
-                orderItems = new HashSet<>();
-            }
-            orderItems.add(item);
-            item.setOrder(this);
-        }
-    }
 }
