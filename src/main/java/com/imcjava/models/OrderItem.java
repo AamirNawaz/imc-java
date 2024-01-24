@@ -21,11 +21,7 @@ public class OrderItem {
     private String skuCode;
     private Long orderAmount;
     private Integer totalQty;
-
-//    @ManyToOne
-//    @JoinColumn(name = "service_id")
-//    private ImcService imcService;
-
+    
     @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;

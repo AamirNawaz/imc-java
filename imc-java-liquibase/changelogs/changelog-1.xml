@@ -298,12 +298,9 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="17" author="aamirnawaz" labels="imc_payments" context="imc-apis">
+    <changeSet id="17" author="aamirnawaz" labels="imc_orders" context="imc-apis">
         <addColumn tableName="imc_orders">
-            <column name="payment_id" type="BIGINT">
-                <constraints nullable="true" referencedTableName="imc_payments"
-                             referencedColumnNames="id"
-                             foreignKeyName="fk_order_payment_id"/>
+            <column name="payment_mode" type="text">
             </column>
         </addColumn>
     </changeSet>
@@ -319,38 +316,5 @@
             </column>
         </createTable>
     </changeSet>
-
-
-    <!-- qualification_id -->
-    <!--    <changeSet id="11" author="aamirnawaz" labels="qualification" context="imc-apis">-->
-    <!--        <addColumn tableName="user">-->
-    <!--            <column name="qualification_id" type="BIGINT">-->
-    <!--                <constraints nullable="true" referencedTableName="qualification" referencedColumnNames="id"-->
-    <!-- foreignKeyName="fk_user_qualification_id"/>-->
-    <!--            </column>-->
-    <!--        </addColumn>-->
-    <!--    </changeSet>-->
-
-    <!-- service_provider_type_id -->
-    <!--    <changeSet id="11" author="aamirnawaz" labels="sp_type" context="imc-apis">-->
-    <!--        <addColumn tableName="user">-->
-    <!--            <column name="service_provider_type_id" type="BIGINT">-->
-    <!--                <constraints nullable="true" referencedTableName="sp_type" referencedColumnNames="id"-->
-    <!-- foreignKeyName="fk_user_service_provider_type_id"/>-->
-    <!--            </column>-->
-    <!--        </addColumn>-->
-    <!--    </changeSet>-->
-
-    <!--    The below for creating role with user fk foreign key is not need before above we have already
-    created  user_role junction table which fulfil our requirments-->
-    <!-- Creating User role_id fk in user table -->
-    <!--    <changeSet id="11" author="aamirnawaz" labels="role" context="imc-apis">-->
-    <!--        <addColumn tableName="user">-->
-    <!--            <column name="role_id" type="BIGINT">-->
-    <!--                <constraints nullable="true" referencedTableName="role" referencedColumnNames="id"-->
-    <!-- foreignKeyName="fk_user_role_id"/>-->
-    <!--            </column>-->
-    <!--        </addColumn>-->
-    <!--    </changeSet>-->
 
 </databaseChangeLog>

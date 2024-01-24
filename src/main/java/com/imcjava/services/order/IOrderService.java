@@ -4,13 +4,10 @@ import com.imcjava.dto.orderDto.OrderItemDTO;
 import com.imcjava.dto.orderDto.OrderRequest;
 import com.imcjava.models.Order;
 import com.imcjava.models.OrderItem;
-import com.imcjava.models.Payment;
 import com.imcjava.models.User;
 import com.imcjava.repository.OrderRepository;
-import com.imcjava.repository.PaymentRepository;
 import com.imcjava.repository.UserRepository;
 import com.imcjava.utils.CommonUtil;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.AuthenticationException;
@@ -24,13 +21,11 @@ import java.util.UUID;
 @Slf4j
 public class IOrderService implements OrderService {
     private final OrderRepository orderRepository;
-    private final PaymentRepository paymentRepository;
     private final UserRepository userRepository;
     private final CommonUtil commonUtil;
 
-    public IOrderService(OrderRepository orderRepository, PaymentRepository paymentRepository, UserRepository userRepository, CommonUtil commonUtil) {
+    public IOrderService(OrderRepository orderRepository, UserRepository userRepository, CommonUtil commonUtil) {
         this.orderRepository = orderRepository;
-        this.paymentRepository = paymentRepository;
         this.userRepository = userRepository;
         this.commonUtil = commonUtil;
     }
@@ -45,13 +40,18 @@ public class IOrderService implements OrderService {
         newOrder.setAddress(orderRequest.getAddress());
         newOrder.setContact(orderRequest.getContact());
         newOrder.setCustomerId(loggedInUser);
+        newOrder.setPaymentMode(orderRequest.getPaymentMode());
         newOrder.setIsPaid(false);
         newOrder.setIsDeleted(false);
         List<OrderItem> orderItems = orderRequest.getOrderItemsDtoList().stream().map(this::mapToDto).toList();
         newOrder.setOrderItemList(orderItems);
-        Payment payment = paymentRepository.findById(orderRequest.getPayment().getId())
-                .orElseThrow(() -> new EntityNotFoundException("Payment Not found!"));
-        newOrder.setPayment(payment);
+
+        //calculating order total amount
+        double totalOrderAmount = orderItems.stream()
+                .mapToDouble(OrderItem::getOrderAmount)
+                .sum();
+        newOrder.setAmount((int) totalOrderAmount);
+
         return orderRepository.save(newOrder);
 
     }

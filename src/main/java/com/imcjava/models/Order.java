@@ -1,6 +1,5 @@
 package com.imcjava.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,14 +24,10 @@ public class Order implements Serializable {
     private Boolean orderStatus;
     private Integer amount;
     private Boolean isPaid;
+    private String paymentMode;
     private Boolean isDeleted;
     private Integer contact;
     private String address;
-
-    @JsonIgnore
-    @OneToOne
-    @JoinColumn(name = "payment_id")
-    private Payment payment;
 
     //    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL)
