@@ -53,9 +53,7 @@
             <column name="total_qty" type="int">
                 <constraints nullable="true"/>
             </column>
-            <column name="available_qty" type="int">
-                <constraints nullable="true"/>
-            </column>
+
             <column name="status" type="boolean" defaultValueBoolean="false">
                 <constraints nullable="true"/>
             </column>
@@ -180,9 +178,6 @@
             <column name="order_number" type="text">
                 <constraints nullable="true"/>
             </column>
-            <column name="order_qty" type="integer">
-                <constraints nullable="true"/>
-            </column>
             <column name="order_status" type="boolean" defaultValueBoolean="false">
                 <constraints nullable="true"/>
             </column>
@@ -190,9 +185,6 @@
                 <constraints nullable="true"/>
             </column>
             <column name="is_paid" type="boolean" defaultValueBoolean="false">
-                <constraints nullable="true"/>
-            </column>
-            <column name="paymentMode" type="text">
                 <constraints nullable="true"/>
             </column>
             <column name="is_deleted" type="boolean" defaultValueBoolean="false">
@@ -208,11 +200,6 @@
             <column name="customer_id" type="uuid">
                 <constraints nullable="true" referencedTableName="imc_users" referencedColumnNames="id"
                              foreignKeyName="fk_order_customer_id"/>
-            </column>
-
-            <column name="services" type="integer">
-                <constraints nullable="true" referencedTableName="imc_services" referencedColumnNames="id"
-                             foreignKeyName="fk_order_service_id"/>
             </column>
 
             <column name="created_at" type="timestamp" defaultValueComputed="NOW()"/>
@@ -254,22 +241,12 @@
 
     <!-- Add foreign key constraints -->
     <changeSet id="13" author="aamirnawaz" labels="userRolesTable" context="imc-api">
-        <addForeignKeyConstraint
-                baseTableName="imc_user_roles"
-                baseColumnNames="user_id"
-                constraintName="fk_user_roles_user"
-                referencedTableName="imc_users"
-                referencedColumnNames="id"
-                onDelete="CASCADE"
-                onUpdate="CASCADE"/>
-        <addForeignKeyConstraint
-                baseTableName="imc_user_roles"
-                baseColumnNames="role_id"
-                constraintName="fk_user_roles_role"
-                referencedTableName="imc_roles"
-                referencedColumnNames="id"
-                onDelete="CASCADE"
-                onUpdate="CASCADE"/>
+        <addForeignKeyConstraint baseTableName="imc_user_roles" baseColumnNames="user_id"
+                                 constraintName="fk_user_roles_user" referencedTableName="imc_users"
+                                 referencedColumnNames="id" onDelete="CASCADE" onUpdate="CASCADE"/>
+        <addForeignKeyConstraint baseTableName="imc_user_roles" baseColumnNames="role_id"
+                                 constraintName="fk_user_roles_role" referencedTableName="imc_roles"
+                                 referencedColumnNames="id" onDelete="CASCADE" onUpdate="CASCADE"/>
     </changeSet>
 
 
@@ -278,47 +255,66 @@
             <column name="order_id" type="BIGINT"/>
         </addColumn>
 
-        <addForeignKeyConstraint
-                baseTableName="imc_services"
-                baseColumnNames="order_id"
-                referencedTableName="imc_orders"
-                referencedColumnNames="id"
-                constraintName="fk_service_order_id"
-                onDelete="CASCADE"
-                onUpdate="CASCADE"
-        />
+        <addForeignKeyConstraint baseTableName="imc_services" baseColumnNames="order_id"
+                                 referencedTableName="imc_orders" referencedColumnNames="id"
+                                 constraintName="fk_service_order_id" onDelete="CASCADE" onUpdate="CASCADE"/>
     </changeSet>
 
-    <!-- qualification_id -->
-    <!--    <changeSet id="11" author="aamirnawaz" labels="qualification" context="imc-apis">-->
-    <!--        <addColumn tableName="user">-->
-    <!--            <column name="qualification_id" type="BIGINT">-->
-    <!--                <constraints nullable="true" referencedTableName="qualification" referencedColumnNames="id"-->
-    <!--                             foreignKeyName="fk_user_qualification_id"/>-->
-    <!--            </column>-->
-    <!--        </addColumn>-->
-    <!--    </changeSet>-->
 
-    <!-- service_provider_type_id -->
-    <!--    <changeSet id="11" author="aamirnawaz" labels="sp_type" context="imc-apis">-->
-    <!--        <addColumn tableName="user">-->
-    <!--            <column name="service_provider_type_id" type="BIGINT">-->
-    <!--                <constraints nullable="true" referencedTableName="sp_type" referencedColumnNames="id"-->
-    <!--                             foreignKeyName="fk_user_service_provider_type_id"/>-->
-    <!--            </column>-->
-    <!--        </addColumn>-->
-    <!--    </changeSet>-->
+    <changeSet id="15" author="aamirnawaz" labels="imc_order_items" context="imc-apis">
+        <createTable tableName="imc_order_items">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="order_amount" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
 
-    <!--    The below for creating role with user fk foreign key is not need before above we have already
-    created  user_role junction table which fulfil our requirments-->
-    <!-- Creating User role_id fk in user table -->
-    <!--    <changeSet id="11" author="aamirnawaz" labels="role" context="imc-apis">-->
-    <!--        <addColumn tableName="user">-->
-    <!--            <column name="role_id" type="BIGINT">-->
-    <!--                <constraints nullable="true" referencedTableName="role" referencedColumnNames="id"-->
-    <!--                             foreignKeyName="fk_user_role_id"/>-->
-    <!--            </column>-->
-    <!--        </addColumn>-->
-    <!--    </changeSet>-->
+            <column name="sku_code" type="text">
+                <constraints nullable="true"/>
+            </column>
+            <column name="total_qty" type="int">
+                <constraints nullable="true"/>
+            </column>
+            <column name="order_id" type="BIGINT">
+                <constraints nullable="true" referencedTableName="imc_orders" referencedColumnNames="id"
+                             foreignKeyName="fk_order_id_order_items"/>
+            </column>
+            <column name="created_at" type="timestamp" defaultValueComputed="NOW()"/>
+            <column name="updated_at" type="timestamp" defaultValueComputed="NOW()"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="16" author="aamirnawaz" labels="imc_payments" context="imc-apis">
+        <createTable tableName="imc_payments">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="payment_method" type="text">
+                <constraints nullable="true"/>
+            </column>
+            <column name="created_at" type="timestamp" defaultValueComputed="NOW()"/>
+            <column name="updated_at" type="timestamp" defaultValueComputed="NOW()"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="17" author="aamirnawaz" labels="imc_orders" context="imc-apis">
+        <addColumn tableName="imc_orders">
+            <column name="payment_mode" type="text">
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <!-- Create order orderitems joint table -->
+    <changeSet id="18" author="aamirnawaz" labels="order_items_list" context="imc-api">
+        <createTable tableName="order_items_list">
+            <column name="order_id" type="BIGINT">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="order_item_id" type="BIGINT">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
 
 </databaseChangeLog>

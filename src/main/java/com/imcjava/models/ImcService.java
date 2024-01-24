@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "imc_services")
-public class ServiceModel implements Serializable {
+public class ImcService implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,17 +23,14 @@ public class ServiceModel implements Serializable {
     private Integer charges;
     private String image;
     private Integer totalQty;
-    private Integer availableQty;
+    private Boolean status;
+
+    //    @OneToMany(mappedBy = "imc_services", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+//    private List<OrderItem> orderItems = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "created_by")
     private User user;
-
-    private Boolean status;
-
-    @ManyToOne
-    @JoinColumn(name = "order_id")
-    private Order imcOrder;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
