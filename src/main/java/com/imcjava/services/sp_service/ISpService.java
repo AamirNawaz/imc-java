@@ -54,4 +54,9 @@ public class ISpService implements SpService {
         serviceRepository.deleteById(id);
         return "Record No:" + id + " deleted successfully!";
     }
+
+    public List<ImcService> getMyService() {
+        String loggedInUserId = commonUtil.getUserIdFromAuthentication();
+        return serviceRepository.findServicesByUserId(UUID.fromString(loggedInUserId));
+    }
 }
