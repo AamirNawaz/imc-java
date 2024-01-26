@@ -4,6 +4,7 @@ import com.imcjava.dto.feedbackDto.FeedbackRequest;
 import com.imcjava.models.Feedback;
 import com.imcjava.services.feedback.IFeedbackService;
 import com.imcjava.utils.CommonUtil;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,11 +33,14 @@ public class ManageFeedback {
         return iFeedbackService.get(UUID.fromString(currentUserId));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{id}")
-    public Feedback getRole(@PathVariable Long id) {
-        return iFeedbackService.getById(id);
+    public Feedback getById(@PathVariable Long id) {
+        String currentUserId = commonUtil.getUserIdFromAuthentication();
+        return iFeedbackService.getByIdAndUserId(id, UUID.fromString(currentUserId));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public String deleteRole(@PathVariable Long id) {
         return iFeedbackService.Delete(id);
