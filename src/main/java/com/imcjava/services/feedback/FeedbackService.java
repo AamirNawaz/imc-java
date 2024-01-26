@@ -10,8 +10,9 @@ public interface FeedbackService {
     Feedback create(UUID UserId, FeedbackRequest feedbackRequest);
 
     List<Feedback> get(UUID userId);
-
-    Feedback getById(Long id);
+    
 
     String Delete(Long id);
+
+    Feedback getByIdAndUserId(Long id, UUID userId);
 }
