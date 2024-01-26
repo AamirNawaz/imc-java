@@ -3,6 +3,10 @@ server:
     context-path: "/api"
   port: 9000
 
+  #  This will hide trace from the postman api response.
+  error:
+    include-stacktrace: on_param
+
 spring:
   application:
     name: "imc-java"
@@ -38,6 +42,8 @@ logging:
     org:
       springframework:
         security: DEBUG
+
+
 
 
 JWT_SECRET_KEY: MyJWTSecretKey1234567899876543201236Love123345445454545SecuretyKeyJwt
