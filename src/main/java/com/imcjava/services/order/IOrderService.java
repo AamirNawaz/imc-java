@@ -71,22 +71,39 @@ public class IOrderService implements OrderService {
             orders = orderRepository.findAll();
         } catch (AuthenticationException | AccessDeniedException e) {
             log.error("Spring Security Exception: " + e.getMessage(), e);
-            // Handle the Spring Security exception, return an appropriate response, or rethrow it if needed
         } catch (RuntimeException e) {
             log.error("Runtime Exception: " + e.getMessage(), e);
-            // Handle other runtime exceptions
         }
         return orders;
     }
 
     @Override
     public Order getById(Long id) {
-        return orderRepository.findById(id).orElseThrow(() -> new RuntimeException("Record not found!"));
+        String loggedInUser = commonUtil.getUserIdFromAuthentication();
+        User user = userRepository.findById(UUID.fromString(loggedInUser)).orElseThrow(() -> new RuntimeException("user with given id not exist!"));
+        return orderRepository.findOrderByIdAndCustomerId(id, user).orElseThrow(() -> new RuntimeException("Record not found!"));
     }
 
     @Override
     public String delete(Long id) {
-        orderRepository.deleteById(id);
+        String loggedInUser = commonUtil.getUserIdFromAuthentication();
+        User user = userRepository.findById(UUID.fromString(loggedInUser)).orElseThrow(() -> new RuntimeException("user with given id not exist!"));
+        orderRepository.deleteOrderByIdAndCustomerId(id, user);
         return "Record No:" + id + "deleted successfully!";
+    }
+
+    public List<Order> getMyOrders() {
+        String loggedInUser = commonUtil.getUserIdFromAuthentication();
+        User user = userRepository.findById(UUID.fromString(loggedInUser)).orElseThrow(() -> new RuntimeException("user with given id not exist!"));
+        List<Order> orders = new ArrayList<>();
+        try {
+            orders = orderRepository.findOrdersByCustomerId(user);
+        } catch (AuthenticationException | AccessDeniedException e) {
+            log.error("Spring Security Exception: " + e.getMessage(), e);
+        } catch (RuntimeException e) {
+            log.error("Runtime Exception: " + e.getMessage(), e);
+        }
+        return orders;
+
     }
 }
