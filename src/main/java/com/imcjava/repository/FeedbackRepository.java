@@ -10,5 +10,5 @@ import java.util.UUID;
 public interface FeedbackRepository extends JpaRepository<Feedback, Long> {
     List<Feedback> findFeedbacksByRatedBy_Id(UUID userId);
 
-    Optional<Feedback> findByIdAndRatedBy(Long id, UUID userId);
+    Optional<Feedback> findFeedbacksByIdAndRatedBy_Id(Long id, UUID userId);
 }
