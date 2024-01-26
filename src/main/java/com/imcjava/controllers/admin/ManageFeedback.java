@@ -26,14 +26,14 @@ public class ManageFeedback {
         String currentUserId = commonUtil.getUserIdFromAuthentication();
         return iFeedbackService.create(UUID.fromString(currentUserId), feedbackRequest);
     }
-
+    
     @GetMapping
     public List<Feedback> get() {
         String currentUserId = commonUtil.getUserIdFromAuthentication();
         return iFeedbackService.get(UUID.fromString(currentUserId));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+
     @GetMapping("/{id}")
     public Feedback getById(@PathVariable Long id) {
         String currentUserId = commonUtil.getUserIdFromAuthentication();

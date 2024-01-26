@@ -56,7 +56,7 @@ public class IFeedbackService implements FeedbackService {
 
     @Override
     public Feedback getByIdAndUserId(Long id, UUID userId) {
-        return feedbackRepository.findByIdAndRatedBy(id, userId).orElseThrow(() -> new RuntimeException("Feedback not found against UserId:" + userId));
+        return feedbackRepository.findFeedbacksByIdAndRatedBy_Id(id, userId).orElseThrow(() -> new RuntimeException("Feedback not found against UserId:" + userId));
     }
 
     @Override
