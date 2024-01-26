@@ -23,6 +23,7 @@ public class ManageRoles {
         return iRoleService.create(roleRequest);
     }
 
+
     @GetMapping
     public List<Role> getRoles() {
         return iRoleService.get();

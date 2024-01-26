@@ -34,11 +34,14 @@ public class SecurityConfig {
         return httpSecurity
 //        Configure HttpSecurity to only be applied to URLs that start with /api/
 //            .securityMatcher("/api/**")
+                .csrf(AbstractHttpConfigurer::disable)
+                .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
                         .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
                         //Frontend open routes
                         .requestMatchers("/v3/**", "/swagger-ui/**", "/authController/**").permitAll()
                         .requestMatchers("/admin/roles/create").permitAll()
+                        .requestMatchers("/admin/roles/**").hasAnyRole("ADMIN", "CUSTOMER", "SP")
                         //Admin routes
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         //Customer routes
@@ -49,12 +52,10 @@ public class SecurityConfig {
                         .requestMatchers("/service-provider/service/**").hasAnyRole("ADMIN", "SP")
                         .anyRequest().authenticated()
                 )
-
                 .sessionManagement(
                         session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
-                .csrf(AbstractHttpConfigurer::disable)
                 .build();
     }
 
