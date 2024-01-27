@@ -2,9 +2,11 @@ package com.imcjava.controllers;
 
 import com.imcjava.dto.LoginRequest;
 import com.imcjava.dto.LoginResponse;
+import com.imcjava.dto.userDto.ForgotPasswordRequest;
 import com.imcjava.dto.userDto.SignupRequest;
 import com.imcjava.services.user.MyUserService;
 import com.imcjava.utils.JwtUtil;
+import jakarta.mail.MessagingException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -61,4 +63,8 @@ public class LoginController {
 
     }
 
+    @PostMapping("/forget-password")
+    public ResponseEntity<?> forgotPassword(@RequestBody ForgotPasswordRequest forgotPasswordRequest) throws MessagingException {
+        return myUserService.forgotPassword(forgotPasswordRequest);
+    }
 }
