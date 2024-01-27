@@ -266,16 +266,16 @@
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="order_amount" type="BIGINT">
+
+            <column name="order_qty" type="BIGINT">
                 <constraints nullable="true"/>
             </column>
 
-            <column name="sku_code" type="text">
-                <constraints nullable="true"/>
+            <column name="service_id" type="BIGINT">
+                <constraints nullable="true" referencedTableName="imc_services" referencedColumnNames="id"
+                             foreignKeyName="fk_order_items_imc_services"/>
             </column>
-            <column name="total_qty" type="int">
-                <constraints nullable="true"/>
-            </column>
+
             <column name="order_id" type="BIGINT">
                 <constraints nullable="true" referencedTableName="imc_orders" referencedColumnNames="id"
                              foreignKeyName="fk_order_id_order_items"/>

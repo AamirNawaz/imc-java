@@ -1,6 +1,7 @@
 package com.imcjava.controllers.admin;
 
 import com.imcjava.dto.orderDto.OrderRequest;
+import com.imcjava.dto.orderDto.OrderResponseDto;
 import com.imcjava.models.Order;
 import com.imcjava.services.order.IOrderService;
 import lombok.RequiredArgsConstructor;
@@ -22,13 +23,13 @@ public class ManageOrder {
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
-    public List<Order> get() {
+    public List<OrderResponseDto> get() {
         return iOrderService.get();
     }
 
     @PreAuthorize("hasRole('CUSTOMER')")
     @GetMapping("/get-my-orders")
-    public List<Order> getMyOrders() {
+    public List<OrderResponseDto> getMyOrders() {
         return iOrderService.getMyOrders();
     }
 

@@ -18,13 +18,14 @@ public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String skuCode;
-    private Long orderAmount;
-    private Integer totalQty;
-    
+    private Long orderQty;
     @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;
+
+    @ManyToOne
+    @JoinColumn(name = "service_id")
+    private ImcService serviceId;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)

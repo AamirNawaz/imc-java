@@ -1,13 +1,17 @@
 package com.imcjava.services.order;
 
 import com.imcjava.dto.orderDto.OrderRequest;
+import com.imcjava.dto.orderDto.OrderResponseDto;
 import com.imcjava.models.Order;
 
 import java.util.List;
 
 public interface OrderService {
-    public Order create(OrderRequest orderRequest);
-    public List<Order> get();
-    public Order getById(Long id);
-    public String delete(Long id);
+    Order create(OrderRequest orderRequest);
+
+    List<OrderResponseDto> get();
+
+    Order getById(Long id);
+
+    String delete(Long id);
 }
