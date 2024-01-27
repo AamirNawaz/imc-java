@@ -1,14 +1,19 @@
 package com.imcjava.services.user;
 
+import com.imcjava.dto.userDto.ForgotPasswordRequest;
 import com.imcjava.dto.userDto.SignupRequest;
 import com.imcjava.models.Role;
 import com.imcjava.models.User;
 import com.imcjava.repository.RoleRepository;
 import com.imcjava.repository.UserRepository;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.InternetAddress;
+import jakarta.mail.internet.MimeMessage;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,6 +21,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -28,10 +34,13 @@ public class MyUserService implements UserDetailsService {
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
 
-    public MyUserService(@Lazy UserRepository userRepository, @Lazy PasswordEncoder passwordEncoder, @Lazy RoleRepository roleRepository) {
+    private final JavaMailSender javaMailSender;
+
+    public MyUserService(@Lazy UserRepository userRepository, @Lazy PasswordEncoder passwordEncoder, @Lazy RoleRepository roleRepository, JavaMailSender javaMailSender) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.roleRepository = roleRepository;
+        this.javaMailSender = javaMailSender;
     }
 
 
@@ -81,5 +90,19 @@ public class MyUserService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("Email not found!"));
     }
 
-    
+
+    public ResponseEntity<?> forgotPassword(ForgotPasswordRequest forgotPasswordRequest) throws MessagingException {
+        User user = userRepository.findByEmail(forgotPasswordRequest.getEmail()).orElseThrow(() -> new EntityNotFoundException("User email not found!"));
+
+        MimeMessage message = javaMailSender.createMimeMessage();
+        message.setFrom(new InternetAddress("aamirnawaz.dev@gmail.com"));
+        message.setRecipients(MimeMessage.RecipientType.TO, user.getEmail());
+        message.setSubject("You are request to rest your password on : " + LocalDateTime.now());
+        String HtmlContent = "<h1>Password Recovery</h1>" +
+                "<p> Click on the link: <a href='http://localhost:9000/change-password/" + user.getId() + "'>Reset Now</a></p>";
+        message.setContent(HtmlContent, "text/html; charset=utf-8");
+
+        javaMailSender.send(message);
+        return ResponseEntity.ok("Email sent, check your mail!");
+    }
 }
