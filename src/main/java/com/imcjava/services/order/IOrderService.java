@@ -2,6 +2,7 @@ package com.imcjava.services.order;
 
 import com.imcjava.dto.orderDto.OrderItemDTO;
 import com.imcjava.dto.orderDto.OrderRequest;
+import com.imcjava.dto.orderDto.OrderResponseDto;
 import com.imcjava.models.Order;
 import com.imcjava.models.OrderItem;
 import com.imcjava.models.User;
@@ -45,36 +46,50 @@ public class IOrderService implements OrderService {
         newOrder.setIsDeleted(false);
         List<OrderItem> orderItems = orderRequest.getOrderItemsDtoList().stream().map(this::mapToDto).toList();
         newOrder.setOrderItemList(orderItems);
-
-        //calculating order total amount
-        double totalOrderAmount = orderItems.stream()
-                .mapToDouble(OrderItem::getOrderAmount)
-                .sum();
-        newOrder.setAmount((int) totalOrderAmount);
-
         return orderRepository.save(newOrder);
 
     }
 
     private OrderItem mapToDto(OrderItemDTO orderItemDTO) {
         OrderItem orderItem = new OrderItem();
-        orderItem.setTotalQty(orderItemDTO.getTotalQty());
-        orderItem.setSkuCode(orderItemDTO.getSkuCode());
-        orderItem.setOrderAmount(orderItemDTO.getOrderAmount());
+        orderItem.setServiceId(orderItemDTO.getServiceId());
+        orderItem.setOrderQty(orderItemDTO.getOrderQty());
         return orderItem;
     }
 
+
     @Override
-    public List<Order> get() {
-        List<Order> orders = new ArrayList<>();
+    public List<OrderResponseDto> get() {
+        List<OrderResponseDto> ordersDtoList = new ArrayList<>();
         try {
-            orders = orderRepository.findAll();
-        } catch (AuthenticationException | AccessDeniedException e) {
-            log.error("Spring Security Exception: " + e.getMessage(), e);
+            List<Order> orders = orderRepository.findAll();
+            for (Order order : orders) {
+                OrderResponseDto orderDto = mapToOrderResponseDto(order);
+                ordersDtoList.add(orderDto);
+            }
+        } catch (AccessDeniedException e) {
+            log.error("Access Denied Exception: " + e.getMessage(), e);
         } catch (RuntimeException e) {
             log.error("Runtime Exception: " + e.getMessage(), e);
         }
-        return orders;
+        return ordersDtoList;
+    }
+
+
+    private OrderResponseDto mapToOrderResponseDto(Order order) {
+        OrderResponseDto orderDto = new OrderResponseDto();
+        orderDto.setId(order.getId());
+        orderDto.setOrderNumber(order.getOrderNumber());
+        orderDto.setOrderStatus(order.getOrderStatus());
+        orderDto.setAmount(order.getAmount());
+        orderDto.setIsPaid(order.getIsPaid());
+        orderDto.setPaymentMode(order.getPaymentMode());
+        orderDto.setIsDeleted(order.getIsDeleted());
+        orderDto.setContact(order.getContact());
+        orderDto.setAddress(order.getAddress());
+        orderDto.setOrderItemList(order.getOrderItemList());
+        orderDto.setCustomerId(order.getCustomerId());
+        return orderDto;
     }
 
     @Override
@@ -92,18 +107,23 @@ public class IOrderService implements OrderService {
         return "Record No:" + id + "deleted successfully!";
     }
 
-    public List<Order> getMyOrders() {
+    public List<OrderResponseDto> getMyOrders() {
         String loggedInUser = commonUtil.getUserIdFromAuthentication();
         User user = userRepository.findById(UUID.fromString(loggedInUser)).orElseThrow(() -> new RuntimeException("user with given id not exist!"));
-        List<Order> orders = new ArrayList<>();
+        List<OrderResponseDto> fetchOrders = new ArrayList<>();
         try {
-            orders = orderRepository.findOrdersByCustomerId(user);
+            List<Order> orders = orderRepository.findOrdersByCustomerId(user);
+            for (Order order : orders) {
+                OrderResponseDto orderDto = mapToOrderResponseDto(order);
+                fetchOrders.add(orderDto);
+            }
         } catch (AuthenticationException | AccessDeniedException e) {
             log.error("Spring Security Exception: " + e.getMessage(), e);
         } catch (RuntimeException e) {
             log.error("Runtime Exception: " + e.getMessage(), e);
         }
-        return orders;
+        
+        return fetchOrders;
 
     }
 }
