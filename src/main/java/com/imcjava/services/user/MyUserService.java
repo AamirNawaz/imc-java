@@ -99,7 +99,7 @@ public class MyUserService implements UserDetailsService {
         message.setRecipients(MimeMessage.RecipientType.TO, user.getEmail());
         message.setSubject("You are request to rest your password on : " + LocalDateTime.now());
         String HtmlContent = "<h1>Password Recovery</h1>" +
-                "<p> Click on the link: <a href='http://localhost:9000/change-password'>Reset Now</a></p>";
+                "<p> Click on the link: <a href='http://localhost:9000/change-password/" + user.getId() + "'>Reset Now</a></p>";
         message.setContent(HtmlContent, "text/html; charset=utf-8");
 
         javaMailSender.send(message);
